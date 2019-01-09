@@ -1,0 +1,26 @@
+{
+  "name": "tesseract/crypto-sdk",
+  "description": "Tesseract Crypto SDK PHP from Tesseract Crypto API v2",
+  "keywords": ["tesseract", "cryptography", "sdk", "http"],
+  "version": "0.2.1",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Cristian Jaramillo",
+      "email": "cristian_gerar@hotmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.3",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "require-dev": {
+      "phpunit/phpunit": "7.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Tesseract\\": "src/Tesseract"
+    },
+    "files": []
+  }
+}
