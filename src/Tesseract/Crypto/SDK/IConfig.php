@@ -11,27 +11,27 @@ interface IConfig
     /**
      *
      */
-    const BASE_URL = 'tesseract.api.baseUrl';
+    const BASE_URL = 'tesseract.crypto.baseUrl';
 
     /**
      *
      */
-    const ACCESS_KEY_ID = 'tesseract.api.access_key_id';
+    const ACCESS_KEY_ID = 'tesseract.crypto.access_key_id';
 
     /**
      *
      */
-    const SECRET_ACCESS_KEY = 'tesseract.api.secret_access_key';
+    const SECRET_ACCESS_KEY = 'tesseract.crypto.secret_access_key';
 
     /**
      *
      */
-    const DEBUG = 'tesseract.api.debug';
+    const DEBUG = 'tesseract.crypto.debug';
 
     /**
      *
      */
-    const TIMEOUT = 'tesseract.api.timeout';
+    const TIMEOUT = 'tesseract.crypto.timeout';
 
     /**
      * @return string

@@ -5,6 +5,7 @@ declare(strict_types = 1);
 use PHPUnit\Framework\TestCase;
 use Tesseract\Crypto\SDK\ConfigBase;
 use Tesseract\Crypto\SDK\CryptoSDK;
+use Tesseract\Crypto\SDK\IConfig;
 
 /**
  *
@@ -22,7 +23,11 @@ final class CryptoSDKTest extends TestCase
      */
     public function setUp()
     {
-        $config = new ConfigBase('https://sandbox.tesseract.mx', 'wEoKY5m0Xi1eNVnvwyXg', 'GBV1PZEmKbxVuOXbf3EOg8vOfNBBs10PwBwCzDwQ');
+        $configs = include('config.php');
+
+        print_r($configs);
+
+        $config = new ConfigBase($configs[IConfig::BASE_URL], $configs[IConfig::ACCESS_KEY_ID], $configs[IConfig::SECRET_ACCESS_KEY]);
         $this->sdk = new CryptoSDK($config);
     }
 
