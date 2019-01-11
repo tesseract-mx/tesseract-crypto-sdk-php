@@ -1,27 +1,32 @@
 {
-  "name": "tesseract/crypto-sdk",
-  "description": "Tesseract Crypto SDK PHP from Tesseract Crypto API v2",
-  "keywords": ["tesseract", "cryptography", "sdk", "security", "aes", "rsa", "sha"],
-  "version": "0.2.1",
-  "license": "MIT",
-  "authors": [
-      {
-          "name": "Cristian Jaramillo",
-          "email": "cristian_gerar@hotmail.com"
-      }
-  ],
-  "require": {
-      "php": ">=7.1.3",
-      "guzzlehttp/guzzle": "^6.3",
-      "ext-json": "*"
-  },
-  "require-dev": {
-      "phpunit/phpunit": "7"
-  },
-  "autoload": {
-      "psr-4": {
-          "Tesseract\\": "src/Tesseract"
-      },
-      "files": []
-  }
+    "name": "tesseract/crypto-sdk",
+    "description": "Tesseract Crypto SDK PHP from Tesseract Crypto API v2",
+    "keywords": ["tesseract", "cryptography", "sdk", "security", "aes", "rsa", "sha"],
+    "version": "0.2.1",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cristian Jaramillo",
+            "email": "cristian_gerar@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.3",
+        "guzzlehttp/guzzle": "^6.3",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tesseract\\": "src/Tesseract"
+        },
+        "files": []
+    },
+    "scripts": {
+        "post-root-package-install" : [
+            "@php -r \"file_exists('test/config.php') || copy('test/config.example.php', 'test/config.php');\""
+        ]
+    }
 }
