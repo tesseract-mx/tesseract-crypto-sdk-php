@@ -1,4 +1,4 @@
 vendor
 tests/coverage
-test/config.php
+tests/config.php
 .idea
