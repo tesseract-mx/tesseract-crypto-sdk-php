@@ -2,6 +2,7 @@
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Cristian Jaramillo (cristian_gerar@hotmail.com)
@@ -9,7 +10,7 @@ use GuzzleHttp\RequestOptions;
  * Class CryptoSDK
  * @package Tesseract\Crypto\SDK
  */
-class CryptoSDK
+class CryptoSDK implements ICryptoSDK
 {
     /**
      * @var
@@ -43,38 +44,42 @@ class CryptoSDK
     }
 
     /**
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function auth() : \Psr\Http\Message\ResponseInterface
+    public function auth() : ResponseInterface
     {
         return $this->httpClient->request(Method::GET, Endpoint::AUTH);
     }
 
     /**
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param int $size
+     * @param int $page
+     * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function institution(): \Psr\Http\Message\ResponseInterface
+    public function institution(int $size = 20, int $page = 0) : ResponseInterface
     {
         return $this->httpClient->request(Method::GET, Endpoint::INSTITUTION);
     }
 
     /**
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param int $size
+     * @param int $page
+     * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function licenses(): \Psr\Http\Message\ResponseInterface
+    public function licenses(int $size = 20, int $page = 0) : ResponseInterface
     {
         return $this->httpClient->request(Method::GET, Endpoint::LICENSES);
     }
 
     /**
      * @param int $licenseId
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function licenseById(int $licenseId): \Psr\Http\Message\ResponseInterface
+    public function licenseById(int $licenseId) : ResponseInterface
     {
         $endpoint = Endpoint::replace(Endpoint::TOKENS, [
             PathParam::LICENSE_ID => $licenseId
@@ -87,10 +92,10 @@ class CryptoSDK
      * @param int $licenseId
      * @param int $size
      * @param int $page
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function tokensByLicenseId(int $licenseId, int $size = 20, int $page = 0): \Psr\Http\Message\ResponseInterface
+    public function tokensByLicenseId(int $licenseId, int $size = 20, int $page = 0) : ResponseInterface
     {
         $endpoint = Endpoint::replace(Endpoint::TOKENS,
             [
@@ -110,10 +115,12 @@ class CryptoSDK
     /**
      * @param int $licenseId
      * @param int $tokenId
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param int $size
+     * @param int $page
+     * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function tokenByLicenseIdAndTokenId(int $licenseId, int $tokenId) : \Psr\Http\Message\ResponseInterface
+    public function tokenByLicenseIdAndTokenId(int $licenseId, int $tokenId, int $size = 20, int $page = 0) : ResponseInterface
     {
         $endpoint = Endpoint::replace(Endpoint::TOKENS, [
             PathParam::LICENSE_ID => $licenseId,
@@ -124,20 +131,22 @@ class CryptoSDK
     }
 
     /**
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param int $size
+     * @param int $page
+     * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function adminInstitutions() : \Psr\Http\Message\ResponseInterface
+    public function adminInstitutions(int $size = 20, int $page = 0) : ResponseInterface
     {
         return $this->httpClient->request(Method::GET, Endpoint::ADMIN_INSTITUTIONS);
     }
 
     /**
      * @param int $institutionId
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function adminInstitutionById(int $institutionId) : \Psr\Http\Message\ResponseInterface
+    public function adminInstitutionById(int $institutionId) : ResponseInterface
     {
         $endpoint = Endpoint::replace(Endpoint::ADMIN_INSTITUTION, [
             PathParam::INTITUTION_ID => $institutionId
