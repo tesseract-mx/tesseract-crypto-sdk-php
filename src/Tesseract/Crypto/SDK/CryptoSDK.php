@@ -167,7 +167,7 @@ class CryptoSDK implements ICryptoSDK
      */
     public function apps(int $size = 20, int $page = 0): ResponseInterface
     {
-        $endpoint = Endpoint::replace(Endpoint::TOKEN, [
+        $endpoint = Endpoint::replace(Endpoint::APPS, [
             QueryParam::SIZE => $size,
             QueryParam::PAGE => $page
         ]);
