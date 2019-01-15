@@ -25,6 +25,8 @@ final class Endpoint
 
     const TOKEN = Endpoint::TOKENS . '/' . PathParam::TOKEN_ID;
 
+    const APPS = Endpoint::INSTITUTION . '/apps';
+
     const ADMIN_INSTITUTIONS = Endpoint::API . 'institutions';
 
     const ADMIN_INSTITUTION = Endpoint::ADMIN_INSTITUTIONS . '/' . PathParam::INTITUTION_ID;

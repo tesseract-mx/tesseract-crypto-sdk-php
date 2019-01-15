@@ -53,12 +53,10 @@ class CryptoSDK implements ICryptoSDK
     }
 
     /**
-     * @param int $size
-     * @param int $page
      * @return ResponseInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function institution(int $size = 20, int $page = 0) : ResponseInterface
+    public function institution() : ResponseInterface
     {
         return $this->httpClient->request(Method::GET, Endpoint::INSTITUTION);
     }
@@ -122,10 +120,16 @@ class CryptoSDK implements ICryptoSDK
      */
     public function tokenByLicenseIdAndTokenId(int $licenseId, int $tokenId, int $size = 20, int $page = 0) : ResponseInterface
     {
-        $endpoint = Endpoint::replace(Endpoint::TOKENS, [
-            PathParam::LICENSE_ID => $licenseId,
-            PathParam::TOKEN_ID => $tokenId,
-        ]);
+        $endpoint = Endpoint::replace(Endpoint::TOKENS,
+            [
+                PathParam::LICENSE_ID => $licenseId,
+                PathParam::TOKEN_ID => $tokenId,
+            ],
+            [
+                QueryParam::SIZE => $size,
+                QueryParam::PAGE => $page
+            ]
+        );
 
         return $this->httpClient->request(Method::GET, $endpoint);
     }
@@ -150,6 +154,22 @@ class CryptoSDK implements ICryptoSDK
     {
         $endpoint = Endpoint::replace(Endpoint::ADMIN_INSTITUTION, [
             PathParam::INTITUTION_ID => $institutionId
+        ]);
+
+        return $this->httpClient->request(Method::GET, $endpoint);
+    }
+
+    /**
+     * @param int $size
+     * @param int $page
+     * @return ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function apps(int $size = 20, int $page = 0): ResponseInterface
+    {
+        $endpoint = Endpoint::replace(Endpoint::TOKEN, [
+            QueryParam::SIZE => $size,
+            QueryParam::PAGE => $page
         ]);
 
         return $this->httpClient->request(Method::GET, $endpoint);

@@ -17,11 +17,9 @@ interface ICryptoSDK
     public function auth() : ResponseInterface;
 
     /**
-     * @param int $size
-     * @param int $page
      * @return ResponseInterface
      */
-    public function institution(int $size = 20, int $page = 0) : ResponseInterface;
+    public function institution() : ResponseInterface;
 
     /**
      * @param int $size
@@ -52,6 +50,13 @@ interface ICryptoSDK
      * @return ResponseInterface
      */
     public function tokenByLicenseIdAndTokenId(int $licenseId, int $tokenId, int $size = 20, int $page = 0) : ResponseInterface;
+
+    /**
+     * @param int $size
+     * @param int $page
+     * @return ResponseInterface
+     */
+    public function apps(int $size = 20, int $page = 0) : ResponseInterface;
 
     /**
      * @param int $size
