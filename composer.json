@@ -23,7 +23,9 @@
         "psr-4": {
             "Tesseract\\": "src/Tesseract"
         },
-        "files": []
+        "files": [
+            "src/Tesseract/Crypto/SDK/helpers.php"
+        ]
     },
     "scripts": {
         "post-root-package-install" : [

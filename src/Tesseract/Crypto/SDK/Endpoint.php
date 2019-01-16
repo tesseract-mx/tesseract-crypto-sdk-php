@@ -27,6 +27,8 @@ final class Endpoint
 
     const APPS = Endpoint::INSTITUTION . '/apps';
 
+    const HASH = Endpoint::INSTITUTION .  '/hash';
+
     const ADMIN_INSTITUTIONS = Endpoint::API . 'institutions';
 
     const ADMIN_INSTITUTION = Endpoint::ADMIN_INSTITUTIONS . '/' . PathParam::INTITUTION_ID;
