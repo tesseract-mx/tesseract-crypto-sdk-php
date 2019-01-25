@@ -21,11 +21,11 @@ interface HttpClient extends Resource
     public function institution() : \Psr\Http\Message\ResponseInterface;
 
     /**
-     * @param int $size
      * @param int $page
+     * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function licenses(int $size = 20, int $page = 0) : \Psr\Http\Message\ResponseInterface;
+    public function licenses(int $page = 0, int $size = 20) : \Psr\Http\Message\ResponseInterface;
 
     /**
      * @param int $licenseId
@@ -35,27 +35,27 @@ interface HttpClient extends Resource
 
     /**
      * @param int $licenseId
-     * @param int $size
      * @param int $page
+     * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function tokensByLicenseId(int $licenseId, int $size = 20, int $page = 0) : \Psr\Http\Message\ResponseInterface;
+    public function tokensByLicenseId(int $licenseId, int $page = 0, int $size = 20) : \Psr\Http\Message\ResponseInterface;
 
     /**
      * @param int $licenseId
      * @param int $tokenId
-     * @param int $size
      * @param int $page
+     * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function tokenByLicenseIdAndTokenId(int $licenseId, int $tokenId, int $size = 20, int $page = 0) : \Psr\Http\Message\ResponseInterface;
+    public function tokenByLicenseIdAndTokenId(int $licenseId, int $tokenId, int $page = 0, int $size = 20) : \Psr\Http\Message\ResponseInterface;
 
     /**
-     * @param int $size
      * @param int $page
+     * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function apps(int $size = 20, int $page = 0) : \Psr\Http\Message\ResponseInterface;
+    public function apps(int $page = 0, int $size = 20) : \Psr\Http\Message\ResponseInterface;
 
     /**
      * @return \Psr\Http\Message\ResponseInterface
@@ -63,11 +63,11 @@ interface HttpClient extends Resource
     public function partition() : \Psr\Http\Message\ResponseInterface;
 
     /**
-     * @param int $size
      * @param int $page
+     * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function keys(int $size = 20, int $page = 0) : \Psr\Http\Message\ResponseInterface;
+    public function keys(int $page = 0, int $size = 20) : \Psr\Http\Message\ResponseInterface;
 
     /**
      * @param array $body
@@ -76,11 +76,11 @@ interface HttpClient extends Resource
     public function hash(array $body) : \Psr\Http\Message\ResponseInterface;
 
     /**
-     * @param int $size
      * @param int $page
+     * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function adminInstitutions(int $size = 20, int $page = 0) : \Psr\Http\Message\ResponseInterface;
+    public function adminInstitutions(int $page = 0, int $size = 20) : \Psr\Http\Message\ResponseInterface;
 
     /**
      * @param int $institutionId

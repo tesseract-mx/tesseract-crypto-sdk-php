@@ -18,13 +18,13 @@ class Hash extends Representation
     const ALGORITHM = "algorithm";
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getProperties(): array
     {
         return [
-            Hash::MESSAGE,
-            Hash::ALGORITHM
+            Hash::MESSAGE => Hash::MESSAGE,
+            Hash::ALGORITHM => Hash::ALGORITHM
         ];
     }
 

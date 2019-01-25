@@ -1,6 +1,7 @@
 <?php namespace Tesseract\Crypto\SDK;
 
 use Psr\Http\Message\StreamInterface;
+use Tesseract\Crypto\SDK\Http\StatusCode;
 
 if(!function_exists('is_success'))
 {
@@ -12,10 +13,9 @@ if(!function_exists('is_success'))
      */
     function is_success(int $statusCode) : bool
     {
-        return ($statusCode >= 200 && $statusCode < 300);
+        return $statusCode == StatusCode::OK;
     }
 }
-
 
 if(!function_exists('to_array'))
 {

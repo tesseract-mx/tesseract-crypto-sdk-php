@@ -1,10 +1,13 @@
-<?php namespace Tesseract\Crypto\SDK;
+<?php namespace Tesseract\Crypto\SDK\Http;
 
 /**
+ *
+ * @author Cristian Jaramillo (cristian_gerar@hotmail.com)
+ *
  * This Class contains the const of  HTTP status code information found at ietf.org and Wikipedia.
  *
  * Class StatusCode
- * @package Tesseract\Crypto\SDK
+ * @package Tesseract\Crypto\SDK\Http
  */
 class StatusCode
 {

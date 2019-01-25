@@ -1,10 +1,10 @@
 <?php namespace Tesseract\Crypto\SDK\Http;
 
 /**
- * Cristian Jaramillo (cristian_gerar@hotmail.com)
+ * @author Cristian Jaramillo (cristian_gerar@hotmail.com)
  *
  * Class PathParam
- * @package App\Client
+ * @package Tesseract\Crypto\SDK\Http
  */
 final class PathParam
 {

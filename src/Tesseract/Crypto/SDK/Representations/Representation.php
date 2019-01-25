@@ -20,20 +20,23 @@ abstract class Representation implements IRepresentation
     {
         foreach ($body as $key => $value)
         {
-            if(in_array($key, $this->getProperties()))
-                $this->body[$key] = $value;
+            if(in_array($key, array_keys($this->getProperties())))
+            {
+                $this->body[$this->getProperties()[$key]] = $value;
+            }
         }
     }
 
     /**
-     * @param $propertyName
-     * @return null
+     * @param $name
+     * @return mixed
      */
-    public function __get($propertyName)
+    public function __get($name)
     {
-        if (array_key_exists($propertyName, $this->body))
-            return $this->body[$propertyName];
+        if (array_key_exists($name, $this->body))
+            return $this->body[$name];
     }
+
 
     /**
      * @return array

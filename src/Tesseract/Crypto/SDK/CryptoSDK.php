@@ -20,11 +20,11 @@ class CryptoSDK extends CryptoHttpClient implements SDK
 
     /**
      * @param int $licenseId
-     * @param int $size
      * @param int $page
+     * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function tokensByLicenseId(int $licenseId, int $size = 20, int $page = 0): \Psr\Http\Message\ResponseInterface
+    public function tokensByLicenseId(int $licenseId, int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
     {
         // TODO: Implement tokensByLicenseId() method.
     }
@@ -32,21 +32,21 @@ class CryptoSDK extends CryptoHttpClient implements SDK
     /**
      * @param int $licenseId
      * @param int $tokenId
-     * @param int $size
      * @param int $page
+     * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function tokenByLicenseIdAndTokenId(int $licenseId, int $tokenId, int $size = 20, int $page = 0): \Psr\Http\Message\ResponseInterface
+    public function tokenByLicenseIdAndTokenId(int $licenseId, int $tokenId, int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
     {
         // TODO: Implement tokenByLicenseIdAndTokenId() method.
     }
 
     /**
-     * @param int $size
      * @param int $page
+     * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function apps(int $size = 20, int $page = 0): \Psr\Http\Message\ResponseInterface
+    public function apps(int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
     {
         // TODO: Implement apps() method.
     }
@@ -60,11 +60,11 @@ class CryptoSDK extends CryptoHttpClient implements SDK
     }
 
     /**
-     * @param int $size
      * @param int $page
+     * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function keys(int $size = 20, int $page = 0): \Psr\Http\Message\ResponseInterface
+    public function keys(int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
     {
         // TODO: Implement keys() method.
     }
@@ -79,11 +79,11 @@ class CryptoSDK extends CryptoHttpClient implements SDK
     }
 
     /**
-     * @param int $size
      * @param int $page
+     * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function adminInstitutions(int $size = 20, int $page = 0): \Psr\Http\Message\ResponseInterface
+    public function adminInstitutions(int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
     {
         // TODO: Implement adminInstitutions() method.
     }

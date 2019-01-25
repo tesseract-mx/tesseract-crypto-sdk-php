@@ -2,6 +2,7 @@
 
 /**
  * Class FieldError
+ * @author Cristian Jaramillo (cristian_gerar@hotmail.com)
  * @package Tesseract\Crypto\SDK\Representations
  */
 class FieldError extends Representation

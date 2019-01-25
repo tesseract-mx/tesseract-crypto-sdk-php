@@ -3,8 +3,19 @@
 declare(strict_types = 1);
 
 use PHPUnit\Framework\TestCase;
-use Tesseract\Crypto\SDK\Config\Config;
-use Tesseract\Crypto\SDK\Config\HttpClientConfig;
+use Tesseract\Crypto\SDK\CryptoSDK;
+use Tesseract\Crypto\SDK\Http\URI;
+use Tesseract\Crypto\SDK\Http\UriBuilder;
+use Tesseract\Crypto\SDK\Http\PathParam;
+use Tesseract\Crypto\SDK\Http\QueryParam;
+use Tesseract\Crypto\SDK\Http\StatusCode;
+use Tesseract\Crypto\SDK\HttpClient;
+use Tesseract\Crypto\SDK\Options\Config;
+use Tesseract\Crypto\SDK\Options\HttpClientConfig;
+use Tesseract\Crypto\SDK\Representations\HATEOAS\PageContainer;
+use Tesseract\Crypto\SDK\Representations\TokenStatus;
+use Tesseract\Crypto\SDK\Representations\TokenType;
+use function Tesseract\Crypto\SDK\to_array;
 
 /**
  *
@@ -24,7 +35,6 @@ final class CryptoSDKTest extends TestCase
     {
         $configs = include('config.php');
         $configs = $configs[$configs['connection']];
-
         $config = new HttpClientConfig($configs[Config::BASE_URL], $configs[Config::ACCESS_KEY_ID], $configs[Config::SECRET_ACCESS_KEY]);
         $this->sdk = new CryptoSDK($config);
     }
@@ -32,9 +42,27 @@ final class CryptoSDKTest extends TestCase
     /**
      * @return \Tesseract\Crypto\SDK\HttpClient
      */
-    public function sdk() : \Tesseract\Crypto\SDK\HttpClient
+    public function sdk() : HttpClient
     {
         return $this->sdk;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testURI()
+    {
+
+        $uri = (new UriBuilder(URI::TOKENS))
+            ->addPathParam(PathParam::LICENSE_ID, 1)
+            ->addQueryParam(QueryParam::PAGE, 0)
+            ->addQueryParam(QueryParam::SIZE, 20)
+            ->addQueryParam(QueryParam::TOKEN_STATUS, TokenStatus::ACTIVE)
+            ->addQueryParam(QueryParam::TOKEN_TYPE, TokenType::CHALLENGE_RESPONSE)
+            ->build();
+
+        $this->assertSame('/api/v2/institution/licenses/1/tokens?page=0&size=20&token_status=ACTIVE&token_type=CHALLENGE_RESPONSE', $uri);
+
     }
 
     /**
@@ -56,20 +84,25 @@ final class CryptoSDKTest extends TestCase
         $this->assertSame(StatusCode::OK, $response->getStatusCode());
     }
 
-//    /**
-//     *
-//     */
-//    public function testLicenses()
-//    {
-//        try {
-//            $response = $this->sdk()->licenses();
-//            $this->assertSame(StatusCode::OK, $response->getStatusCode());
-//            echo $response->getBody() . "\n";
-//        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
-//            echo $e->getMessage() . "\n";
-//        }
-//    }
-//
+    /**
+     * @throws Exception
+     */
+    public function testReadAllLicenses()
+    {
+        $response = $this->sdk()->licenses();
+        $this->assertSame(StatusCode::OK, $response->getStatusCode());
+        $body = to_array($response->getBody());
+        $container = new PageContainer($body);
+        $number = $container->page()->number + 1;
+        $totalPages = $container->page()->total_pages;
+
+        for ($i = $number; $i < $totalPages; $i++)
+        {
+            $response = $this->sdk()->licenses($i);
+            $this->assertSame(StatusCode::OK, $response->getStatusCode());
+        }
+    }
+
 //    /**
 //     *
 //     * @throws \GuzzleHttp\Exception\GuzzleException

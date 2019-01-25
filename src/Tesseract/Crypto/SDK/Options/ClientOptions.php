@@ -1,10 +1,10 @@
-<?php namespace Tesseract\Crypto\SDK;
+<?php namespace Tesseract\Crypto\SDK\Options;
 
 /**
- * Cristian Jaramillo (cristian_gerar@hotmail.com)
+ * @author Cristian Jaramillo (cristian_gerar@hotmail.com)
  *
  * Class ClientOptions
- * @package App\Client
+ * @package Tesseract\Crypto\SDK\Options
  */
 final class ClientOptions
 {
