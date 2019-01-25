@@ -29,7 +29,7 @@
     },
     "scripts": {
         "post-root-package-install" : [
-            "@php -r \"file_exists('test/config.php') || copy('test/config.example.php', 'test/config.php');\""
+            "@php -r \"file_exists('tests/config.php') || copy('tests/config.example.php', 'tests/config.php');\""
         ]
     }
 }

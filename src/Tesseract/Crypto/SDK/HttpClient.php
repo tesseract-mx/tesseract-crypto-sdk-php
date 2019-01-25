@@ -1,16 +1,15 @@
 <?php namespace Tesseract\Crypto\SDK;
 
-use Tesseract\Crypto\SDK\Representations\Hash;
-
 /**
  *
  * @author Cristian Jaramillo (cristian_gerar@hotmail.com)
  *
- * Interface ICryptoSDK
+ * Interface HttpClient
  * @package Tesseract\Crypto\SDK
  */
-interface ICryptoSDK
+interface HttpClient extends Resource
 {
+
     /**
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -75,12 +74,6 @@ interface ICryptoSDK
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function hash(array $body) : \Psr\Http\Message\ResponseInterface;
-
-    /**
-     * @param Hash $has
-     * @return Hash
-     */
-    public function sha(Hash $has) : Hash;
 
     /**
      * @param int $size

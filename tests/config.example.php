@@ -2,29 +2,93 @@
 
 return [
 
-    /**
-     *
-     */
-    'tesseract.crypto.baseUrl' => 'https://sandbox.tesseract.mx',
+    'connection' => 'sandbox',
 
-    /**
-     *
-     */
-    'tesseract.crypto.access_key_id' => '[your_access_key_id]',
+    'local' => [
 
-    /**
-     *
-     */
-    'tesseract.crypto.secret_access_key' => '[your_secret_access_key]',
+        /**
+         *
+         */
+        'tesseract.crypto.baseUrl' => 'http://localhost:8080',
 
-    /**
-     *
-     */
-    'tesseract.crypto.debug' => false,
+        /**
+         *
+         */
+        'tesseract.crypto.access_key_id' => '[your_access_key_id]',
 
-    /**
-     *
-     */
-    'tesseract.crypto.timeout' => 5.000,
+        /**
+         *
+         */
+        'tesseract.crypto.secret_access_key' => '[your_secret_access_key]',
+
+        /**
+         *
+         */
+        'tesseract.crypto.debug' => false,
+
+        /**
+         *
+         */
+        'tesseract.crypto.timeout' => 5.000,
+
+    ],
+
+    'sandbox' => [
+
+        /**
+         *
+         */
+        'tesseract.crypto.baseUrl' => 'https://sandbox.tesseract.mx',
+
+        /**
+         *
+         */
+        'tesseract.crypto.access_key_id' => '[your_access_key_id]',
+
+        /**
+         *
+         */
+        'tesseract.crypto.secret_access_key' => '[your_secret_access_key]',
+
+        /**
+         *
+         */
+        'tesseract.crypto.debug' => false,
+
+        /**
+         *
+         */
+        'tesseract.crypto.timeout' => 5.000,
+
+    ],
+
+    'crypto' => [
+
+        /**
+         *
+         */
+        'tesseract.crypto.baseUrl' => 'https://crypto.tesseract.mx',
+
+        /**
+         *
+         */
+        'tesseract.crypto.access_key_id' => '[your_access_key_id]',
+
+        /**
+         *
+         */
+        'tesseract.crypto.secret_access_key' => '[your_secret_access_key]',
+
+        /**
+         *
+         */
+        'tesseract.crypto.debug' => false,
+
+        /**
+         *
+         */
+        'tesseract.crypto.timeout' => 5.000,
+
+    ],
 
 ];

@@ -6,7 +6,7 @@
  * Class Config
  * @package App\Client
  */
-interface IConfig
+interface Config
 {
     /**
      *
@@ -39,11 +39,14 @@ interface IConfig
     function getBaseUrl() : string;
 
     /**
+     * @deprecated
      * @return string
      */
     function getAccessKeyId() : string;
 
     /**
+     *
+     * @deprecated
      * @return string
      */
     function getSecretAccessKey() : string;
