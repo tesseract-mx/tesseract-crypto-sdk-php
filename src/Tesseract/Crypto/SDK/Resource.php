@@ -30,4 +30,10 @@ interface Resource
      */
     function put(string $endpoint, array $body) : \Psr\Http\Message\ResponseInterface;
 
+    /**
+     * @param string $endpoint
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    function delete(string $endpoint) : \Psr\Http\Message\ResponseInterface;
+
 }

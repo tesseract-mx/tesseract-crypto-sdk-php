@@ -25,9 +25,23 @@ final class URI
 
     const ENROLLMENT_STRING = URI::TOKEN . '/enrollment-string';
 
+    const ACT_CODE = URI::TOKEN . '/act-code';
+
+    const CHALLENGE = URI::TOKEN . '/challenge';
+
+    const VALIDATE = URI::TOKEN . '/validate';
+
     const APPS = URI::INSTITUTION . '/apps';
 
+    const APP = URI::APPS . '/' . PathParam::APP_ID;
+
+    const PARTITION = URI::INSTITUTION . '/partition';
+
+    const KEYS = URI::PARTITION . '/keys';
+
     const HASH = URI::INSTITUTION . '/hash';
+
+    const AES = URI::INSTITUTION . '/aes/' . PathParam::AES_ALIAS;
 
     const ADMIN_INSTITUTIONS = URI::API . 'institutions';
 

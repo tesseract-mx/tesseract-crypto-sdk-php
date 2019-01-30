@@ -30,3 +30,15 @@ if(!function_exists('to_array'))
         return json_decode($stream->getContents(), TRUE);
     }
 }
+
+if(!function_exists('encryption'))
+{
+    /**
+     * @param string $encryptionStandard
+     * @return array
+     */
+    function encryption(string $encryptionStandard) : string
+    {
+        return explode("_", $encryptionStandard)[0];
+    }
+}

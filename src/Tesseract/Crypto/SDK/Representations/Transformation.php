@@ -4,7 +4,7 @@
  * Class Transformation
  * @package Tesseract\Crypto\SDK\Representations
  */
-class Transformation
+final class Transformation
 {
 
     /**
@@ -60,5 +60,20 @@ class Transformation
      * AES Encryption in OFB Mode (Cipher Output Feedback mode) No Padding
      */
     const AES_OFB_NoPadding = "AES_OFB_NoPadding";
+
+    /**
+     *
+     */
+    const TRANSFORMATIONS = [
+        self::AES_CBC_ISO10126Padding,
+        self::AES_CBC_NoPadding,
+        self::AES_CBC_PKCS5Padding,
+        self::AES_CFB8_NoPadding,
+        self::AES_CFB128_NoPadding,
+        self::AES_CTR_NoPadding,
+        self::AES_ECB_NoPadding,
+        self::AES_GCM_NoPadding,
+        self::AES_OFB_NoPadding
+    ];
 
 }

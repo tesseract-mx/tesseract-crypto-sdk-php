@@ -22,4 +22,14 @@ final class PathParam
      *
      */
     const TOKEN_ID = '{token_id}';
+
+    /**
+     *
+     */
+    const APP_ID = '{app_id}';
+
+    /**
+     *
+     */
+    const AES_ALIAS = '{aes_alias}';
 }

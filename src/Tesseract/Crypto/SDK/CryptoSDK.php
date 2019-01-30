@@ -1,50 +1,11 @@
 <?php namespace Tesseract\Crypto\SDK;
 
-use Tesseract\Crypto\SDK\Representations\Hash;
-
 /**
  * Class CryptoSDK
  * @package Tesseract\Crypto\SDK
  */
 class CryptoSDK extends CryptoHttpClient implements SDK
 {
-
-    /**
-     * @param int $page
-     * @param int $size
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function apps(int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
-    {
-        // TODO: Implement apps() method.
-    }
-
-    /**
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function partition(): \Psr\Http\Message\ResponseInterface
-    {
-        // TODO: Implement partition() method.
-    }
-
-    /**
-     * @param int $page
-     * @param int $size
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function keys(int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
-    {
-        // TODO: Implement keys() method.
-    }
-
-    /**
-     * @param array $body
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function hash(array $body): \Psr\Http\Message\ResponseInterface
-    {
-        // TODO: Implement hash() method.
-    }
 
     /**
      * @param int $page
@@ -65,12 +26,4 @@ class CryptoSDK extends CryptoHttpClient implements SDK
         // TODO: Implement adminInstitutionById() method.
     }
 
-    /**
-     * @param Hash $has
-     * @return Hash
-     */
-    public function sha(Hash $has): Hash
-    {
-        // TODO: Implement sha() method.
-    }
 }

@@ -116,5 +116,13 @@ abstract class AbstractHttpClient implements HttpClient
         return $this->httpClient->put($endpoint, $options);
     }
 
+    /**
+     * @param string $endpoint
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    function delete(string $endpoint): \Psr\Http\Message\ResponseInterface
+    {
+        return $this->httpClient->delete($endpoint, $this->options());
+    }
 
 }
