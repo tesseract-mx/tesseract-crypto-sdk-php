@@ -26,6 +26,8 @@ use function Tesseract\Crypto\SDK\to_array;
 final class CryptoSDKTest extends TestCase
 {
 
+    const ROLE_ID = 1;
+
     /**
      * @var int
      */
@@ -81,6 +83,26 @@ final class CryptoSDKTest extends TestCase
     public function testRawAuth()
     {
         $response = $this->sdk->auth();
+        $this->assertSame(StatusCode::OK, $response->getStatusCode());
+        return to_array($response->getBody());
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    public function testRawRoles()
+    {
+        $response = $this->sdk->roles();
+        $this->assertSame(StatusCode::OK, $response->getStatusCode());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testRawRole()
+    {
+        $response = $this->sdk->role(self::ROLE_ID);
         $this->assertSame(StatusCode::OK, $response->getStatusCode());
     }
 

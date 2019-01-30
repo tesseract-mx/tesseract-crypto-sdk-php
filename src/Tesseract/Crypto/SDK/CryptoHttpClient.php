@@ -23,6 +23,35 @@ abstract class CryptoHttpClient extends AbstractHttpClient
     }
 
     /**
+     * @param int $page
+     * @param int $size
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function roles(int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
+    {
+        $uri = (new UriBuilder(URI::ROLES))
+            ->addQueryParam(QueryParam::PAGE, $page)
+            ->addQueryParam(QueryParam::SIZE, $size)
+            ->build();
+
+        return $this->get($uri);
+    }
+
+    /**
+     * @param int $roleId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function role(int $roleId): \Psr\Http\Message\ResponseInterface
+    {
+        $uri = (new UriBuilder(URI::ROLES))
+            ->addPathParam(PathParam::ROLE_ID, $roleId)
+            ->build();
+
+        return $this->get($uri);
+    }
+
+
+    /**
      * @return \Psr\Http\Message\ResponseInterface
      */
     function institution(): \Psr\Http\Message\ResponseInterface

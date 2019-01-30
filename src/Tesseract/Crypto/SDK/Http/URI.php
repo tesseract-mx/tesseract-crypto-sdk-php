@@ -13,6 +13,8 @@ final class URI
 
     const AUTH = URI::API . 'auth';
 
+    const ROLES = URI::API . 'roles';
+
     const INSTITUTION = URI::API . 'institution';
 
     const LICENSES = URI::INSTITUTION . '/licenses';
@@ -45,7 +47,7 @@ final class URI
 
     const ADMIN_INSTITUTIONS = URI::API . 'institutions';
 
-    const ADMIN_INSTITUTION = URI::ADMIN_INSTITUTIONS . '/' . PathParam::INTITUTION_ID;
+    const ADMIN_INSTITUTION = URI::ADMIN_INSTITUTIONS . '/' . PathParam::INSTITUTION_ID;
 
     /**
      * @var string

@@ -16,6 +16,19 @@ interface HttpClient extends Resource
     public function auth() : \Psr\Http\Message\ResponseInterface;
 
     /**
+     * @param int $page
+     * @param int $size
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function roles(int $page = 0, int $size = 20) : \Psr\Http\Message\ResponseInterface;
+
+    /**
+     * @param int $roleId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function role(int $roleId) : \Psr\Http\Message\ResponseInterface;
+
+    /**
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function institution() : \Psr\Http\Message\ResponseInterface;

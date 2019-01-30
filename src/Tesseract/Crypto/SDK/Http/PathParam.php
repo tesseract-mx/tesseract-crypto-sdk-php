@@ -8,10 +8,16 @@
  */
 final class PathParam
 {
+
     /**
      *
      */
-    const INTITUTION_ID = '{institution_id}';
+    const ROLE_ID = '{role_id}';
+
+    /**
+     *
+     */
+    const INSTITUTION_ID = '{institution_id}';
 
     /**
      *
