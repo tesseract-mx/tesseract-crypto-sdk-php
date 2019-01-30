@@ -96,10 +96,25 @@ abstract class AbstractHttpClient implements HttpClient
     function post(string $endpoint, array $body): \Psr\Http\Message\ResponseInterface
     {
         $options = array_merge([
-            RequestOptions::BODY => $body
+            RequestOptions::JSON => $body
         ], $this->options());
 
         return $this->httpClient->post($endpoint, $options);
     }
+
+    /**
+     * @param string $endpoint
+     * @param array $body
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    function put(string $endpoint, array $body): \Psr\Http\Message\ResponseInterface
+    {
+        $options = array_merge([
+            RequestOptions::JSON => $body
+        ], $this->options());
+
+        return $this->httpClient->put($endpoint, $options);
+    }
+
 
 }

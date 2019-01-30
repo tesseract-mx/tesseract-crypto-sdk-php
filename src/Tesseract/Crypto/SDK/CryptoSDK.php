@@ -10,38 +10,6 @@ class CryptoSDK extends CryptoHttpClient implements SDK
 {
 
     /**
-     * @param int $licenseId
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function licenseById(int $licenseId): \Psr\Http\Message\ResponseInterface
-    {
-        // TODO: Implement licenseById() method.
-    }
-
-    /**
-     * @param int $licenseId
-     * @param int $page
-     * @param int $size
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function tokensByLicenseId(int $licenseId, int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
-    {
-        // TODO: Implement tokensByLicenseId() method.
-    }
-
-    /**
-     * @param int $licenseId
-     * @param int $tokenId
-     * @param int $page
-     * @param int $size
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function tokenByLicenseIdAndTokenId(int $licenseId, int $tokenId, int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
-    {
-        // TODO: Implement tokenByLicenseIdAndTokenId() method.
-    }
-
-    /**
      * @param int $page
      * @param int $size
      * @return \Psr\Http\Message\ResponseInterface

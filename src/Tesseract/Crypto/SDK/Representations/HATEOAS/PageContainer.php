@@ -39,6 +39,20 @@ class PageContainer extends Representation
      */
     const PAGE = 'page';
 
+    /**
+     * @param string $class
+     * @return array
+     */
+    public function content(string $class) : array
+    {
+        $content = $this->{self::CONTENT};
+        $licenses = array();
+        foreach ($content as $license)
+        {
+            $licenses[] = new $class($license);
+        }
+        return $licenses;
+    }
 
     /**
      * @return Page

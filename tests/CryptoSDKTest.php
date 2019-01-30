@@ -12,7 +12,10 @@ use Tesseract\Crypto\SDK\Http\StatusCode;
 use Tesseract\Crypto\SDK\HttpClient;
 use Tesseract\Crypto\SDK\Options\Config;
 use Tesseract\Crypto\SDK\Options\HttpClientConfig;
+use Tesseract\Crypto\SDK\Representations\HATEOAS\LicensePage;
 use Tesseract\Crypto\SDK\Representations\HATEOAS\PageContainer;
+use Tesseract\Crypto\SDK\Representations\License;
+use Tesseract\Crypto\SDK\Representations\Token;
 use Tesseract\Crypto\SDK\Representations\TokenStatus;
 use Tesseract\Crypto\SDK\Representations\TokenType;
 use function Tesseract\Crypto\SDK\to_array;
@@ -23,10 +26,26 @@ use function Tesseract\Crypto\SDK\to_array;
  */
 final class CryptoSDKTest extends TestCase
 {
+
     /**
-     * @var
+     * @var int
+     */
+    const LICENSE_ID = 1;
+
+    /**
+     * @var int
+     */
+    const TOKEN_ID = 1;
+
+    /**
+     * @var \Tesseract\Crypto\SDK\HttpClient
      */
     private $sdk;
+
+    /**
+     * @var int
+     */
+    private $tokenId;
 
     /**
      *
@@ -34,8 +53,11 @@ final class CryptoSDKTest extends TestCase
     public function setUp()
     {
         $configs = include('config.php');
-        $configs = $configs[$configs['connection']];
-        $config = new HttpClientConfig($configs[Config::BASE_URL], $configs[Config::ACCESS_KEY_ID], $configs[Config::SECRET_ACCESS_KEY]);
+        $configs = $configs['sandbox'];
+
+        $configs[Config::DEBUG] = true;
+
+        $config = new HttpClientConfig($configs[Config::BASE_URL], $configs[Config::ACCESS_KEY_ID], $configs[Config::SECRET_ACCESS_KEY], $configs[Config::DEBUG], $configs[Config::TIMEOUT]);
         $this->sdk = new CryptoSDK($config);
     }
 
@@ -68,7 +90,7 @@ final class CryptoSDKTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testAuth()
+    public function testRawAuth()
     {
         $response = $this->sdk()->auth();
         $this->assertSame(StatusCode::OK, $response->getStatusCode());
@@ -78,23 +100,105 @@ final class CryptoSDKTest extends TestCase
      *
      * @throws Exception
      */
-    public function testInstitution()
+    public function testRawInstitution()
     {
         $response = $this->sdk()->institution();
         $this->assertSame(StatusCode::OK, $response->getStatusCode());
     }
 
     /**
+     *
      * @throws Exception
      */
-    public function testReadAllLicenses()
+    public function testRawLicenses()
+    {
+        $response = $this->sdk()->licenses();
+        $this->assertSame(StatusCode::OK, $response->getStatusCode());
+    }
+
+    /**
+     *
+     * @throws Exception
+     */
+    public function testRawLicenseById()
+    {
+        $response = $this->sdk()->licenseById(self::LICENSE_ID);
+        $this->assertSame(StatusCode::OK, $response->getStatusCode());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testRawTokens()
+    {
+        $response = $this->sdk()->tokensByLicenseId(self::LICENSE_ID);
+        $this->assertSame(StatusCode::OK, $response->getStatusCode());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testRawCreateTokenByLicenseId()
+    {
+        $token = [
+            'token_type' => TokenType::CHALLENGE_RESPONSE
+        ];
+
+        $response = $this->sdk()->createTokenByLicenseId(self::LICENSE_ID, $token);
+        $token = to_array($response->getBody());
+        $this->tokenId = $token['id'];
+        print_r([$this->tokenId]);
+        $this->assertSame(StatusCode::CREATED, $response->getStatusCode());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testRawTokenByLicenseIdAndTokenId()
+    {
+        $response = $this->sdk()->tokenByLicenseIdAndTokenId(self::LICENSE_ID, self::TOKEN_ID);
+        $this->assertSame(StatusCode::OK, $response->getStatusCode());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testRawUpdateTokenByLicenseIdAndTokenId()
+    {
+
+        print_r([$this->tokenId]);
+
+        $response = $this->sdk()->tokenByLicenseIdAndTokenId(self::LICENSE_ID, self::TOKEN_ID);
+        $this->assertSame(StatusCode::OK, $response->getStatusCode());
+
+        $token = to_array($response->getBody());
+        $token['token_status'] = TokenStatus::REVOKED;
+
+        $response = $this->sdk()->updateTokenByLicenseIdAndTokenId(self::LICENSE_ID, self::TOKEN_ID, $token);
+        $this->assertSame(StatusCode::OK, $response->getStatusCode());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testRawEnrollmentString()
+    {
+        $response = $this->sdk()->enrollmentStringByLicenseIdAndTokenId(self::LICENSE_ID, self::TOKEN_ID);
+        $this->assertSame(StatusCode::OK, $response->getStatusCode());
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function ReadAllLicenses()
     {
         $response = $this->sdk()->licenses();
         $this->assertSame(StatusCode::OK, $response->getStatusCode());
         $body = to_array($response->getBody());
-        $container = new PageContainer($body);
-        $number = $container->page()->number + 1;
-        $totalPages = $container->page()->total_pages;
+        $licenses = new PageContainer($body);
+        $this->licenses($licenses->content(License::class));
+        $number = $licenses->page()->number + 1;
+        $totalPages = $licenses->page()->total_pages;
 
         for ($i = $number; $i < $totalPages; $i++)
         {
@@ -103,36 +207,55 @@ final class CryptoSDKTest extends TestCase
         }
     }
 
-//    /**
-//     *
-//     * @throws \GuzzleHttp\Exception\GuzzleException
-//     */
-//    public function testTokens()
-//    {
-//        $response = $this->sdk()->licenses();
-//        $this->assertSame(StatusCode::OK, $response->getStatusCode());
-//        $body = json_decode($response->getBody()->getContents());
-//
-//        $size = 20;
-//        $page = 0;
-//
-//        foreach ($body->_content as $license)
-//        {
-//            $response = $this->sdk()->tokensByLicenseId($license->id, $size, $page);
-//            $this->assertSame(StatusCode::OK, $response->getStatusCode());
-//            $tokens = json_decode($response->getBody()->getContents());
-//            $totalPages = $tokens->_page->total_pages;
-//
-//            for ($page = 0; $page < $totalPages; $page++)
-//            {
-//                $response = $this->sdk()->tokensByLicenseId($license->id, $size, $page);
-//                $this->assertSame(StatusCode::OK, $response->getStatusCode());
-//                echo $response->getBody() . "\n";
-//            }
-//
-//        }
-//    }
-//
+    const LICENSE_FORMAT = "| %3s | %5s | %5s | %4s | %9s | %8s |\n";
+
+    /**
+     * @param array $licenses
+     * @throws Exception
+     */
+    public function licenses(array $licenses)
+    {
+        foreach ($licenses as $license)
+        {
+            echo "+-----+-------+-------+------+-----------+----------+\n";
+            echo sprintf(self::LICENSE_FORMAT, 'id', 'stock', 'free', 'used', 'status','duration');
+            echo "+-----+-------+-------+------+-----------+----------+\n";
+            echo sprintf(self::LICENSE_FORMAT, $license->id, $license->stock, $license->free, $license->used, $license->status, $license->duration);
+            echo "+-----+-------+-------+------+-----------+----------+\n";
+            $this->tokensByLicense($license);
+        }
+    }
+
+    /**
+     * @param License $license
+     * @throws Exception
+     */
+    public function tokensByLicense(License $license)
+    {
+        echo sprintf("Read all token with license id '%d'",$license->id);
+        $response = $this->sdk()->tokensByLicenseId($license->id);
+        $this->assertSame(StatusCode::OK, $response->getStatusCode());
+        $body = to_array($response->getBody());
+        $licenses = new PageContainer($body);
+        $this->tokens($licenses->content(Token::class));
+    }
+
+    const TOKEN_FORMAT = "| %3s | %12s | %12s | %10s |";
+
+    /**
+     * @param array $tokens
+     */
+    public function tokens(array $tokens)
+    {
+        foreach ($tokens as $token)
+        {
+            echo "+-----+-------+\n";
+
+            echo "+-----+-------+\n";
+            echo "+-----+-------+\n";
+        }
+    }
+
 //    /**
 //     *
 //     * @throws \GuzzleHttp\Exception\GuzzleException

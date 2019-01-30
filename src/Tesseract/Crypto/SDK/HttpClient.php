@@ -43,12 +43,32 @@ interface HttpClient extends Resource
 
     /**
      * @param int $licenseId
-     * @param int $tokenId
-     * @param int $page
-     * @param int $size
+     * @param array $token
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function tokenByLicenseIdAndTokenId(int $licenseId, int $tokenId, int $page = 0, int $size = 20) : \Psr\Http\Message\ResponseInterface;
+    public function createTokenByLicenseId(int $licenseId, array $token) : \Psr\Http\Message\ResponseInterface;
+
+    /**
+     * @param int $licenseId
+     * @param int $tokenId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function tokenByLicenseIdAndTokenId(int $licenseId, int $tokenId) : \Psr\Http\Message\ResponseInterface;
+
+    /**
+     * @param int $licenseId
+     * @param int $tokenId
+     * @param array $token
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    function updateTokenByLicenseIdAndTokenId(int $licenseId, int $tokenId, array $token) : \Psr\Http\Message\ResponseInterface;
+
+    /**
+     * @param int $licenseId
+     * @param int $tokenId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function enrollmentStringByLicenseIdAndTokenId(int $licenseId, int $tokenId) : \Psr\Http\Message\ResponseInterface;
 
     /**
      * @param int $page

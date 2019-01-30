@@ -23,6 +23,8 @@ final class URI
 
     const TOKEN = URI::TOKENS . '/' . PathParam::TOKEN_ID;
 
+    const ENROLLMENT_STRING = URI::TOKEN . '/enrollment-string';
+
     const APPS = URI::INSTITUTION . '/apps';
 
     const HASH = URI::INSTITUTION . '/hash';

@@ -23,4 +23,11 @@ interface Resource
      */
     function post(string $endpoint, array $body) : \Psr\Http\Message\ResponseInterface;
 
+    /**
+     * @param string $endpoint
+     * @param array $body
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    function put(string $endpoint, array $body) : \Psr\Http\Message\ResponseInterface;
+
 }
