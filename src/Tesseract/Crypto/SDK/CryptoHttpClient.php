@@ -256,6 +256,42 @@ abstract class CryptoHttpClient extends AbstractHttpClient
     }
 
     /**
+     * @param array $app
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function createApp(array $app): \Psr\Http\Message\ResponseInterface
+    {
+        return $this->post(URI::APPS, $app);
+    }
+
+    /**
+     * @param int $appId
+     * @param array $app
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function putApp(int $appId, array $app): \Psr\Http\Message\ResponseInterface
+    {
+        $uri = (new UriBuilder(URI::APP))
+            ->addPathParam(PathParam::APP_ID, $appId)
+            ->build();
+
+        return $this->put($uri, $app);
+    }
+
+    /**
+     * @param int $appId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function deleteApp(int $appId): \Psr\Http\Message\ResponseInterface
+    {
+        $uri = (new UriBuilder(URI::APP))
+            ->addPathParam(PathParam::APP_ID, $appId)
+            ->build();
+
+        return $this->delete($uri);
+    }
+
+    /**
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function partition(): \Psr\Http\Message\ResponseInterface
@@ -300,5 +336,41 @@ abstract class CryptoHttpClient extends AbstractHttpClient
         return $this->post($uri, $aes);
     }
 
+    /**
+     * @param int $page
+     * @param int $size
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function adminInstitutions(int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
+    {
+        $uri = (new UriBuilder(URI::ADMIN_INSTITUTIONS))
+            ->addQueryParam(QueryParam::PAGE, $page)
+            ->addQueryParam(QueryParam::SIZE, $size)
+            ->build();
+
+        return $this->get($uri);
+    }
+
+    /**
+     * @param int $institutionId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function adminInstitutionById(int $institutionId): \Psr\Http\Message\ResponseInterface
+    {
+        $uri = (new UriBuilder(URI::ADMIN_INSTITUTION))
+            ->addPathParam(PathParam::INSTITUTION_ID, $institutionId)
+            ->build();
+
+        return $this->get($uri);
+    }
+
+    /**
+     * @param array $institution
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function adminCreateInstitution(array $institution): \Psr\Http\Message\ResponseInterface
+    {
+        return $this->post(URI::ADMIN_INSTITUTIONS, $institution);
+    }
 
 }

@@ -126,6 +126,25 @@ interface HttpClient extends Resource
     public function app(int $appId) : \Psr\Http\Message\ResponseInterface;
 
     /**
+     * @param array $app
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function createApp(array $app) : \Psr\Http\Message\ResponseInterface;
+
+    /**
+     * @param int $appId
+     * @param array $app
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function putApp(int $appId, array $app): \Psr\Http\Message\ResponseInterface;
+
+    /**
+     * @param int $appId
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function deleteApp(int $appId): \Psr\Http\Message\ResponseInterface;
+
+    /**
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function partition() : \Psr\Http\Message\ResponseInterface;
@@ -162,4 +181,11 @@ interface HttpClient extends Resource
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function adminInstitutionById(int $institutionId) : \Psr\Http\Message\ResponseInterface;
+
+    /**
+     * @param array $institution
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function adminCreateInstitution(array $institution) : \Psr\Http\Message\ResponseInterface;
+
 }

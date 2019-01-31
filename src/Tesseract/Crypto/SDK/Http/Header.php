@@ -15,4 +15,9 @@ final class Header
      *
      */
     const CONTENT_TYPE = 'Content-Type';
+
+    /**
+     *
+     */
+    const LOCATION = 'Location';
 }

@@ -7,7 +7,7 @@
  * Interface ICryptoSDK
  * @package Tesseract\Crypto\SDK
  */
-interface SDK
+interface SDK extends HttpClient
 {
 
 }
