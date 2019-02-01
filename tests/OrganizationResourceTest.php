@@ -1,91 +1,28 @@
-<?php
+<?php namespace Tesseract\Crypto\SDK\Test;
 
-use PHPUnit\Framework\TestCase;
-use Tesseract\Crypto\SDK\CryptoSDK;
+require __DIR__ . '/ResourceTest.php';
+
 use function Tesseract\Crypto\SDK\encryption;
 use Tesseract\Crypto\SDK\Http\Header;
-use Tesseract\Crypto\SDK\Http\URI;
-use Tesseract\Crypto\SDK\Http\UriBuilder;
-use Tesseract\Crypto\SDK\Http\PathParam;
-use Tesseract\Crypto\SDK\Http\QueryParam;
 use Tesseract\Crypto\SDK\Http\StatusCode;
-use Tesseract\Crypto\SDK\Options\Config;
-use Tesseract\Crypto\SDK\Options\HttpClientConfig;
-use Tesseract\Crypto\SDK\Representations\HashAlgorithm;
+use Tesseract\Crypto\SDK\Representations\Enums\HashAlgorithm;
+use Tesseract\Crypto\SDK\Representations\Enums\Mode;
+use Tesseract\Crypto\SDK\Representations\Enums\TokenStatus;
+use Tesseract\Crypto\SDK\Representations\Enums\TokenType;
+use Tesseract\Crypto\SDK\Representations\Enums\Transformation;
 use Tesseract\Crypto\SDK\Representations\HATEOAS\Paged;
-use Tesseract\Crypto\SDK\Representations\Mode;
-use Tesseract\Crypto\SDK\Representations\TokenStatus;
-use Tesseract\Crypto\SDK\Representations\TokenType;
-use Tesseract\Crypto\SDK\Representations\Transformation;
 use function Tesseract\Crypto\SDK\to_array;
 
 /**
- * Class CryptoHttpClientText
+ * Class OrganizationResourceTest
+ * @package Tesseract\Crypto\SDK\Test
  */
-final class CryptoHttpClientText extends TestCase
+class OrganizationResourceTest extends ResourceTest
 {
-    /**
-     * @var int
-     */
-    const ROLE_ID = 1;
 
     /**
-     *
-     * @var int
-     */
-    const INSTITUTION_ID = 1;
-
-    /**
-     * @var int
-     */
-    const LICENSE_ID = 1;
-
-    /**
-     * @var int
-     */
-    const TOKEN_ID = 1;
-
-    /**
-     * @var int
-     */
-    const APP_ID = 1;
-
-    /**
-     * @var \Tesseract\Crypto\SDK\HttpClient
-     */
-    protected $sdk;
-
-    /**
-     *
-     */
-    public function setUp()
-    {
-        $configs = include('config.php');
-        $configs = $configs[$configs['connection']];
-        $config = new HttpClientConfig($configs[Config::BASE_URL], $configs[Config::ACCESS_KEY_ID], $configs[Config::SECRET_ACCESS_KEY], $configs[Config::DEBUG], $configs[Config::TIMEOUT]);
-        $this->sdk = new CryptoSDK($config);
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function testURI()
-    {
-
-        $uri = (new UriBuilder(URI::TOKENS))
-            ->addPathParam(PathParam::LICENSE_ID, 1)
-            ->addQueryParam(QueryParam::PAGE, 0)
-            ->addQueryParam(QueryParam::SIZE, 20)
-            ->addQueryParam(QueryParam::TOKEN_STATUS, TokenStatus::ACTIVE)
-            ->addQueryParam(QueryParam::TOKEN_TYPE, TokenType::CHALLENGE_RESPONSE)
-            ->build();
-
-        $this->assertEquals('/api/v2/institution/licenses/1/tokens?page=0&size=20&token_status=ACTIVE&token_type=CHALLENGE_RESPONSE', $uri);
-
-    }
-
-    /**
-     * @throws Exception
+     * @return array
+     * @throws \Exception
      */
     public function testRawAuth()
     {
@@ -95,8 +32,9 @@ final class CryptoHttpClientText extends TestCase
     }
 
     /**
+     * @depends testRawAuth
      * @return array
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawRoles()
     {
@@ -108,7 +46,8 @@ final class CryptoHttpClientText extends TestCase
     }
 
     /**
-     * @throws Exception
+     * @depends testRawAuth
+     * @throws \Exception
      */
     public function testRawRole()
     {
@@ -118,7 +57,7 @@ final class CryptoHttpClientText extends TestCase
 
     /**
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawInstitution()
     {
@@ -128,7 +67,7 @@ final class CryptoHttpClientText extends TestCase
 
     /**
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawLicenses()
     {
@@ -143,7 +82,7 @@ final class CryptoHttpClientText extends TestCase
 
     /**
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawLicense()
     {
@@ -154,7 +93,7 @@ final class CryptoHttpClientText extends TestCase
 
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawTokens()
     {
@@ -169,7 +108,7 @@ final class CryptoHttpClientText extends TestCase
 
     /**
      * @return array
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawCreateToken()
     {
@@ -184,7 +123,7 @@ final class CryptoHttpClientText extends TestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawCreateTokenBadRequest()
     {
@@ -201,7 +140,7 @@ final class CryptoHttpClientText extends TestCase
      * @depends testRawCreateToken
      * @param array $token
      * @return array
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawToken(array $token)
     {
@@ -213,7 +152,7 @@ final class CryptoHttpClientText extends TestCase
     /**
      * @depends testRawToken
      * @param array $token
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawEnrollmentString(array $token)
     {
@@ -224,7 +163,7 @@ final class CryptoHttpClientText extends TestCase
     /**
      * @depends testRawToken
      * @param array $token
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawActCode(array $token)
     {
@@ -235,7 +174,7 @@ final class CryptoHttpClientText extends TestCase
     /**
      * @depends testRawToken
      * @param array $token
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawChallenge(array $token)
     {
@@ -250,7 +189,7 @@ final class CryptoHttpClientText extends TestCase
      *
      * @depends testRawToken
      * @param array $token
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawValidate(array $token)
     {
@@ -270,7 +209,7 @@ final class CryptoHttpClientText extends TestCase
      *
      * @depends testRawToken
      * @param array $token
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawValidateBadRequest(array $token)
     {
@@ -290,7 +229,7 @@ final class CryptoHttpClientText extends TestCase
      *
      * @depends testRawToken
      * @param array $token
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawValidateConflict(array $token)
     {
@@ -309,7 +248,7 @@ final class CryptoHttpClientText extends TestCase
     /**
      * @depends testRawToken
      * @param array $token
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawPutToken(array $token)
     {
@@ -321,7 +260,7 @@ final class CryptoHttpClientText extends TestCase
     /**
      * @depends testRawToken
      * @param array $token
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawDeleteToken(array $token)
     {
@@ -331,7 +270,7 @@ final class CryptoHttpClientText extends TestCase
 
     /**
      * @return array
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawApps()
     {
@@ -343,7 +282,7 @@ final class CryptoHttpClientText extends TestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawCreateApp()
     {
@@ -363,7 +302,7 @@ final class CryptoHttpClientText extends TestCase
      * @depends testRawCreateApp
      * @param string $location
      * @return array
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawApp(string $location)
     {
@@ -377,7 +316,7 @@ final class CryptoHttpClientText extends TestCase
      * @depends testRawRoles
      * @param array $app
      * @param array $roles
-     * @throws Exception
+     * @throws \Exception
      * @return array
      */
     public function testRawPutApp(array $app, array $roles)
@@ -392,7 +331,7 @@ final class CryptoHttpClientText extends TestCase
     /**
      * @depends testRawPutApp
      * @param array $app
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawDeleteApp(array $app)
     {
@@ -403,7 +342,7 @@ final class CryptoHttpClientText extends TestCase
     /**
      * @depends testRawApps
      * @param array $apps
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawDeleteAppByEnabled(array $apps)
     {
@@ -418,7 +357,7 @@ final class CryptoHttpClientText extends TestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawPartition()
     {
@@ -427,7 +366,7 @@ final class CryptoHttpClientText extends TestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawKeys()
     {
@@ -439,7 +378,7 @@ final class CryptoHttpClientText extends TestCase
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawHash()
     {
@@ -460,7 +399,7 @@ final class CryptoHttpClientText extends TestCase
     /**
      * @depends testRawKeys
      * @param array $keys
-     * @throws Exception
+     * @throws \Exception
      */
     public function testRawAes(array $keys)
     {
@@ -494,74 +433,4 @@ final class CryptoHttpClientText extends TestCase
             }
         }
     }
-
-    /**
-     * @return mixed
-     * @throws Exception
-     */
-    public function testRawAdminInstitutions()
-    {
-        $response = $this->sdk->adminInstitutions();
-        $this->assertEquals(StatusCode::OK,$response->getStatusCode());
-        $body = to_array($response->getBody());
-        $this->assertArrayHasKey(Paged::_CONTENT, $body);
-        return $body[Paged::_CONTENT];
-    }
-
-    /**
-     * @return array
-     * @throws Exception
-     */
-    public function testRawAdminInstitution()
-    {
-        $response = $this->sdk->adminInstitutionById(self::INSTITUTION_ID);
-        $this->assertEquals(StatusCode::OK, $response->getStatusCode());
-        return to_array($response->getBody());
-    }
-
-    /**
-     *
-     */
-    public function dataInstitutions()
-    {
-        return [
-            [
-                [
-                    "common_name" =>"hotmail.com",
-                    "organization" => "Microsoft Inc.",
-                    "organization_unit" => "Microsoft MX",
-                    "country" => "MX",
-                    "state" => "Ciudad de México",
-                    "locality" => "Cuajimalpa",
-                    "email" => "cristian_gerar@hotmail.com",
-                    "token_label" => "SELab",
-                ]
-            ],
-            [
-                [
-                    "common_name" =>"gmail.com",
-                    "organization" => "Alphabet inc.",
-                    "organization_unit" => "Alphabet MX",
-                    "country" => "MX",
-                    "state" => "Ciudad de México",
-                    "locality" => "Miguel Hidalgo",
-                    "email" => "cristian.gerar@gmail.com",
-                    "token_label" => "SELab",
-                ]
-            ]
-        ];
-    }
-
-    /**
-     *
-     * @dataProvider dataInstitutions
-     * @param array $institution
-     * @throws Exception
-     */
-    public function testRawAdminCreateInstitution(array $institution)
-    {
-        $response = $this->sdk->adminCreateInstitution($institution);
-        $this->assertEquals(StatusCode::CREATED, $response->getStatusCode());
-    }
-
 }

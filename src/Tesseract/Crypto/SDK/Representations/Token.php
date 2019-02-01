@@ -1,12 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: crist
- * Date: 29/01/2019
- * Time: 04:08 PM
- */
-
-namespace Tesseract\Crypto\SDK\Representations;
+<?php namespace Tesseract\Crypto\SDK\Representations;
 
 /**
  * Class Token

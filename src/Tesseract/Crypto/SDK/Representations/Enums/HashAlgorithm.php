@@ -1,4 +1,4 @@
-<?php namespace Tesseract\Crypto\SDK\Representations;
+<?php namespace Tesseract\Crypto\SDK\Representations\Enums;
 
 /**
  * Class HashAlgorithm

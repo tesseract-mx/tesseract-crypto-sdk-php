@@ -49,6 +49,16 @@ final class URI
 
     const ADMIN_INSTITUTION = URI::ADMIN_INSTITUTIONS . '/' . PathParam::INSTITUTION_ID;
 
+    const ADMIN_LICENSES = URI::ADMIN_INSTITUTION . '/licenses';
+
+    const ADMIN_LICENSE = URI::ADMIN_LICENSES . '/' . PathParam::LICENSE_ID;
+
+    const ADMIN_TOKENS = URI::ADMIN_LICENSE . '/tokens';
+
+    const ADMIN_TOKEN = URI::ADMIN_TOKENS . '/' . PathParam::TOKEN_ID;
+
+    const HSM = self::API . 'hsm';
+
     /**
      * @var string
      */

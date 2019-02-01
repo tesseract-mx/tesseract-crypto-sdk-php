@@ -20,7 +20,7 @@ use Tesseract\Crypto\SDK\Options\Config;
  * Class AbstractHttpClient
  * @package Tesseract\Crypto\SDK
  */
-abstract class AbstractHttpClient implements HttpClient
+abstract class AbstractHttpClient implements Resource
 {
     /**
      * @var \Tesseract\Crypto\SDK\Options\Config
@@ -31,8 +31,7 @@ abstract class AbstractHttpClient implements HttpClient
      * @var array
      */
     private $headers = array(
-        Header::ACCEPT => MediaType::APPLICATION_JSON,
-        Header::CONTENT_TYPE => MediaType::APPLICATION_JSON
+        Header::ACCEPT => MediaType::APPLICATION_JSON
     );
 
     /**
@@ -80,6 +79,24 @@ abstract class AbstractHttpClient implements HttpClient
     }
 
     /**
+     * @param array $body
+     * @return array
+     */
+    protected function addBodyOptions(array $body = array())
+    {
+        $options = array();
+
+        if(empty($body) === FALSE)
+            $options = [
+                RequestOptions::JSON => $body
+            ];
+
+        array_push($options, $this->options());
+
+        return $options;
+    }
+
+    /**
      * @param string $endpoint
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -93,13 +110,9 @@ abstract class AbstractHttpClient implements HttpClient
      * @param array $body
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function post(string $endpoint, array $body): \Psr\Http\Message\ResponseInterface
+    function post(string $endpoint, array $body = array()): \Psr\Http\Message\ResponseInterface
     {
-        $options = array_merge([
-            RequestOptions::JSON => $body
-        ], $this->options());
-
-        return $this->httpClient->post($endpoint, $options);
+        return $this->httpClient->post($endpoint, $this->addBodyOptions($body));
     }
 
     /**
@@ -107,22 +120,19 @@ abstract class AbstractHttpClient implements HttpClient
      * @param array $body
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function put(string $endpoint, array $body): \Psr\Http\Message\ResponseInterface
+    function put(string $endpoint, array $body = array()) : \Psr\Http\Message\ResponseInterface
     {
-        $options = array_merge([
-            RequestOptions::JSON => $body
-        ], $this->options());
-
-        return $this->httpClient->put($endpoint, $options);
+        return $this->httpClient->put($endpoint, $this->addBodyOptions($body));
     }
 
     /**
      * @param string $endpoint
+     * @param array $body
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function delete(string $endpoint): \Psr\Http\Message\ResponseInterface
+    function delete(string $endpoint, array $body = array()): \Psr\Http\Message\ResponseInterface
     {
-        return $this->httpClient->delete($endpoint, $this->options());
+        return $this->httpClient->delete($endpoint, $this->addBodyOptions($body));
     }
 
 }

@@ -21,19 +21,20 @@ interface Resource
      * @param array $body
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function post(string $endpoint, array $body) : \Psr\Http\Message\ResponseInterface;
+    function post(string $endpoint, array $body = array()) : \Psr\Http\Message\ResponseInterface;
 
     /**
      * @param string $endpoint
      * @param array $body
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function put(string $endpoint, array $body) : \Psr\Http\Message\ResponseInterface;
+    function put(string $endpoint, array $body = array()) : \Psr\Http\Message\ResponseInterface;
 
     /**
      * @param string $endpoint
+     * @param array $body
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function delete(string $endpoint) : \Psr\Http\Message\ResponseInterface;
+    function delete(string $endpoint, array $body = array()) : \Psr\Http\Message\ResponseInterface;
 
 }

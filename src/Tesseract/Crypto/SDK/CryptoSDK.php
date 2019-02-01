@@ -4,7 +4,10 @@
  * Class CryptoSDK
  * @package Tesseract\Crypto\SDK
  */
-class CryptoSDK extends CryptoHttpClient implements SDK
+class CryptoSDK extends AbstractHttpClient implements HsmRestResource
 {
-
+    use OrganizationResourceTrait;
+    use AdminOrganizationTrait;
+    use HsmResourceTrait;
+    use HsmRestResourceTrait;
 }
