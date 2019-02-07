@@ -1,10 +1,15 @@
-<?php namespace Tesseract\Crypto\SDK\Test;
+<?php
 
-require __DIR__ . '/ResourceTest.php';
-
+use Tesseract\Crypto\SDK\CryptoSDK;
 use function Tesseract\Crypto\SDK\encryption;
 use Tesseract\Crypto\SDK\Http\Header;
+use Tesseract\Crypto\SDK\Http\PathParam;
+use Tesseract\Crypto\SDK\Http\QueryParam;
 use Tesseract\Crypto\SDK\Http\StatusCode;
+use Tesseract\Crypto\SDK\Http\URI;
+use Tesseract\Crypto\SDK\Http\UriBuilder;
+use Tesseract\Crypto\SDK\Options\Config;
+use Tesseract\Crypto\SDK\Options\HttpClientConfig;
 use Tesseract\Crypto\SDK\Representations\Enums\HashAlgorithm;
 use Tesseract\Crypto\SDK\Representations\Enums\Mode;
 use Tesseract\Crypto\SDK\Representations\Enums\TokenStatus;
@@ -14,15 +19,73 @@ use Tesseract\Crypto\SDK\Representations\HATEOAS\Paged;
 use function Tesseract\Crypto\SDK\to_array;
 
 /**
- * Class OrganizationResourceTest
- * @package Tesseract\Crypto\SDK\Test
+ * @author Cristian Jaramillo (cristian_gerar@hotmail.com)
+ * Class CryptoSdkTest
  */
-class OrganizationResourceTest extends ResourceTest
+final class CryptoSdkTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @var int
+     */
+    const ROLE_ID = 1;
 
     /**
-     * @return array
-     * @throws \Exception
+     *
+     * @var int
+     */
+    const INSTITUTION_ID = 1;
+
+    /**
+     * @var int
+     */
+    const LICENSE_ID = 1;
+
+    /**
+     * @var int
+     */
+    const TOKEN_ID = 1;
+
+    /**
+     * @var int
+     */
+    const APP_ID = 1;
+
+    /**
+     * @var \Tesseract\Crypto\SDK\HttpClient
+     */
+    protected $sdk;
+
+    /**
+     *
+     */
+    public function setUp()
+    {
+        $configs = include('config.php');
+        $configs = $configs[$configs['connection']];
+        $config = new HttpClientConfig($configs[Config::BASE_URL], $configs[Config::ACCESS_KEY_ID], $configs[Config::SECRET_ACCESS_KEY], $configs[Config::DEBUG], $configs[Config::TIMEOUT]);
+        $this->sdk = new CryptoSDK($config);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testURI()
+    {
+
+        $uri = (new UriBuilder(URI::TOKENS))
+            ->addPathParam(PathParam::LICENSE_ID, 1)
+            ->addQueryParam(QueryParam::PAGE, 0)
+            ->addQueryParam(QueryParam::SIZE, 20)
+            ->addQueryParam(QueryParam::TOKEN_STATUS, TokenStatus::ACTIVE)
+            ->addQueryParam(QueryParam::TOKEN_TYPE, TokenType::CHALLENGE_RESPONSE)
+            ->build();
+
+        $this->assertEquals('/api/v2/institution/licenses/1/tokens?page=0&size=20&token_status=ACTIVE&token_type=CHALLENGE_RESPONSE', $uri);
+
+    }
+
+    /**
+     * @throws Exception
      */
     public function testRawAuth()
     {
@@ -34,7 +97,7 @@ class OrganizationResourceTest extends ResourceTest
     /**
      * @depends testRawAuth
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawRoles()
     {
@@ -47,7 +110,7 @@ class OrganizationResourceTest extends ResourceTest
 
     /**
      * @depends testRawAuth
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawRole()
     {
@@ -57,7 +120,7 @@ class OrganizationResourceTest extends ResourceTest
 
     /**
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawInstitution()
     {
@@ -67,7 +130,7 @@ class OrganizationResourceTest extends ResourceTest
 
     /**
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawLicenses()
     {
@@ -82,7 +145,7 @@ class OrganizationResourceTest extends ResourceTest
 
     /**
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawLicense()
     {
@@ -93,7 +156,7 @@ class OrganizationResourceTest extends ResourceTest
 
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawTokens()
     {
@@ -108,7 +171,7 @@ class OrganizationResourceTest extends ResourceTest
 
     /**
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawCreateToken()
     {
@@ -123,7 +186,7 @@ class OrganizationResourceTest extends ResourceTest
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawCreateTokenBadRequest()
     {
@@ -140,7 +203,7 @@ class OrganizationResourceTest extends ResourceTest
      * @depends testRawCreateToken
      * @param array $token
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawToken(array $token)
     {
@@ -152,7 +215,7 @@ class OrganizationResourceTest extends ResourceTest
     /**
      * @depends testRawToken
      * @param array $token
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawEnrollmentString(array $token)
     {
@@ -163,7 +226,7 @@ class OrganizationResourceTest extends ResourceTest
     /**
      * @depends testRawToken
      * @param array $token
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawActCode(array $token)
     {
@@ -174,7 +237,7 @@ class OrganizationResourceTest extends ResourceTest
     /**
      * @depends testRawToken
      * @param array $token
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawChallenge(array $token)
     {
@@ -189,7 +252,7 @@ class OrganizationResourceTest extends ResourceTest
      *
      * @depends testRawToken
      * @param array $token
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawValidate(array $token)
     {
@@ -209,7 +272,7 @@ class OrganizationResourceTest extends ResourceTest
      *
      * @depends testRawToken
      * @param array $token
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawValidateBadRequest(array $token)
     {
@@ -229,7 +292,7 @@ class OrganizationResourceTest extends ResourceTest
      *
      * @depends testRawToken
      * @param array $token
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawValidateConflict(array $token)
     {
@@ -248,7 +311,7 @@ class OrganizationResourceTest extends ResourceTest
     /**
      * @depends testRawToken
      * @param array $token
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawPutToken(array $token)
     {
@@ -260,7 +323,7 @@ class OrganizationResourceTest extends ResourceTest
     /**
      * @depends testRawToken
      * @param array $token
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawDeleteToken(array $token)
     {
@@ -270,7 +333,7 @@ class OrganizationResourceTest extends ResourceTest
 
     /**
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawApps()
     {
@@ -282,7 +345,7 @@ class OrganizationResourceTest extends ResourceTest
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawCreateApp()
     {
@@ -302,7 +365,7 @@ class OrganizationResourceTest extends ResourceTest
      * @depends testRawCreateApp
      * @param string $location
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawApp(string $location)
     {
@@ -316,7 +379,7 @@ class OrganizationResourceTest extends ResourceTest
      * @depends testRawRoles
      * @param array $app
      * @param array $roles
-     * @throws \Exception
+     * @throws Exception
      * @return array
      */
     public function testRawPutApp(array $app, array $roles)
@@ -331,7 +394,7 @@ class OrganizationResourceTest extends ResourceTest
     /**
      * @depends testRawPutApp
      * @param array $app
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawDeleteApp(array $app)
     {
@@ -342,7 +405,7 @@ class OrganizationResourceTest extends ResourceTest
     /**
      * @depends testRawApps
      * @param array $apps
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawDeleteAppByEnabled(array $apps)
     {
@@ -357,7 +420,7 @@ class OrganizationResourceTest extends ResourceTest
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawPartition()
     {
@@ -366,7 +429,7 @@ class OrganizationResourceTest extends ResourceTest
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawKeys()
     {
@@ -378,7 +441,7 @@ class OrganizationResourceTest extends ResourceTest
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawHash()
     {
@@ -399,7 +462,7 @@ class OrganizationResourceTest extends ResourceTest
     /**
      * @depends testRawKeys
      * @param array $keys
-     * @throws \Exception
+     * @throws Exception
      */
     public function testRawAes(array $keys)
     {
@@ -411,6 +474,9 @@ class OrganizationResourceTest extends ResourceTest
 
                 foreach (Transformation::TRANSFORMATIONS as $transformation)
                 {
+
+                    echo sprintf("%s \n", $transformation);
+
                     $body = [
                         'message' => self::SECRET,
                         'mode' => Mode::ENCRYPT,
