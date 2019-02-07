@@ -1,25 +1,78 @@
 # Tesseract Crypto SDK PHP
 
-array_dot method to navigate into array
-
 [![Build Status](https://travis-ci.org/00F100/array_dot.svg?branch=master)](https://travis-ci.org/00F100/array_dot) [![codecov](https://codecov.io/gh/00F100/array_dot/branch/master/graph/badge.svg)](https://codecov.io/gh/00F100/array_dot) [![Total Downloads](https://poser.pugx.org/00F100/array_dot/downloads)](https://packagist.org/packages/00F100/array_dot)
 
-## How to install
+## How to install Tesseract Crypto SDK PHP
 
-Composer:
+The recommended way to install Tesseract Crypto SDK PHP is through Composer.
 
-```sh
-$ composer require tesseract/crypto-sdk
+```bash
+
+    # Install Composer
+    curl -sS https://getcomposer.org/installer | php
+    
 ```
 
-or add in composer.json
+Next, run the Composer command to install the latest stable version of Guzzle:
 
-```json
-{
-    "require": {
-        "tesseract/crypto-sdk": "^0.2.1"
-    }
-}
+```bash
+
+    php composer.phar require tesseract/crypto-sdk
+    
+```
+
+After installing, you need to require Composer's autoloader:
+
+```php
+
+    require 'vendor/autoload.php';
+
+```
+
+## Configuration
+
+```php
+
+return [
+  
+  /*
+  |--------------------------------------------------------------------------
+  | Default Base URL
+  |--------------------------------------------------------------------------
+  */
+  'tesseract.crypto.baseUrl' => 'https://sandbox.tesseract.mx',
+  
+  /*
+  |--------------------------------------------------------------------------
+  | Default Access Key ID
+  |--------------------------------------------------------------------------
+  */
+  'tesseract.crypto.access_key_id' => '[your_access_key_id]',
+   
+  /*
+  |--------------------------------------------------------------------------
+  | Default Secret Access Key
+  |--------------------------------------------------------------------------
+  */
+  'tesseract.crypto.secret_access_key' => '[your_secret_access_key]',
+   
+  /*
+  |--------------------------------------------------------------------------
+  | Default Debug
+  |--------------------------------------------------------------------------
+  */
+  'tesseract.crypto.debug' => false,
+   
+  /*
+  |--------------------------------------------------------------------------
+  | Default Timeout
+  |--------------------------------------------------------------------------
+  */
+  'tesseract.crypto.timeout' => 5.000
+
+];
+
+
 ```
 
 ## How to use
@@ -27,22 +80,29 @@ or add in composer.json
 ```php
 <?php
 
-use Tesseract\Crypto\SDK\ConfigBase;
+require 'vendor/autoload.php';
+
 use Tesseract\Crypto\SDK\CryptoSDK;
+use Tesseract\Crypto\SDK\Http\StatusCode;
+use Tesseract\Crypto\SDK\Options\Config;
+use Tesseract\Crypto\SDK\Options\HttpClientConfig;
 
+$configs = include('config.php');
 
-$config = new ConfigBase('https://sandbox.tesseract.mx', 'your_access_key_id', 'your_secret_access_key');
+$httpClientConfig = new HttpClientConfig($configs[Config::BASE_URL], 
+    $configs[Config::ACCESS_KEY_ID], 
+    $configs[Config::SECRET_ACCESS_KEY], 
+    $configs[Config::DEBUG], 
+    $configs[Config::TIMEOUT]);
 
-$sdk = new CryptoSDK($config);
+$sdk = new CryptoSDK($httpClientConfig);
 
-try {
-    
-    $auth = $sdk->auth();
-    
-    print_r(json_encode($auth->getBody()));
-    
-} catch (\GuzzleHttp\Exception\GuzzleException $e) {
-    error_log($e->getMessage());
+$response = $sdk->auth();
+
+if($response->getStatusCode() == StatusCode::OK)
+{
+    if($response->getBody()->isReadable())
+        echo $response->getBody()->getContents();
 }
 
 ```
