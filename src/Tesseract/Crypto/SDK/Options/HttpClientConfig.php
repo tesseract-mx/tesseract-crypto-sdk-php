@@ -1,14 +1,13 @@
-<?php namespace Tesseract\Crypto\SDK;
+<?php namespace Tesseract\Crypto\SDK\Options;
 
 /**
- * Cristian Jaramillo (cristian_gerar@hotmail.com)
+ * @author Cristian Jaramillo (cristian_gerar@hotmail.com)
  *
- * Class ConfigBase
- * @package Tesseract\Crypto\SDK
+ * Class HttpClientConfig
+ * @package Tesseract\Crypto\SDK\Options
  */
-class ConfigBase implements IConfig
+class HttpClientConfig implements Config
 {
-
     /**
      * @var
      */
@@ -61,6 +60,7 @@ class ConfigBase implements IConfig
     }
 
     /**
+     * @deprecated
      * @return string
      */
     function getAccessKeyId(): string
@@ -69,6 +69,7 @@ class ConfigBase implements IConfig
     }
 
     /**
+     * @deprecated
      * @return string
      */
     function getSecretAccessKey(): string
@@ -102,5 +103,4 @@ class ConfigBase implements IConfig
     {
         return $this->timeout;
     }
-
 }

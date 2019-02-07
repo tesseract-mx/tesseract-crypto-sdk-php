@@ -1,12 +1,13 @@
-<?php namespace Tesseract\Crypto\SDK;
+<?php namespace Tesseract\Crypto\SDK\Options;
 
 /**
- * Cristian Jaramillo (cristian_gerar@hotmail.com)
  *
- * Class Config
- * @package App\Client
+ * @author Cristian Jaramillo (cristian_gerar@hotmail.com)
+ *
+ * Interface Config
+ * @package Tesseract\Crypto\SDK\Options
  */
-interface IConfig
+interface Config
 {
     /**
      *
@@ -34,31 +35,38 @@ interface IConfig
     const TIMEOUT = 'tesseract.crypto.timeout';
 
     /**
+     *
      * @return string
      */
     function getBaseUrl() : string;
 
     /**
+     * @deprecated
      * @return string
      */
     function getAccessKeyId() : string;
 
     /**
+     *
+     * @deprecated
      * @return string
      */
     function getSecretAccessKey() : string;
 
     /**
+     *
      * @return array
      */
     function getAuth() : array;
 
     /**
+     *
      * @return bool
      */
     function isDebug() : bool ;
 
     /**
+     *
      * @return float
      */
     function getTimeout() : float;
