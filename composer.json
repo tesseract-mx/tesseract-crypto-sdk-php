@@ -3,7 +3,6 @@
     "description": "Tesseract Crypto SDK PHP from Tesseract Crypto API v2",
     "keywords": ["tesseract", "cryptography", "sdk", "security", "aes", "rsa", "sha"],
     "version": "0.2.1",
-    "minimum-stability": "dev",
     "license": "MIT",
     "authors": [
         {
@@ -32,6 +31,8 @@
             "src/Tesseract/Crypto/SDK/helpers.php"
         ]
     },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "scripts": {
         "post-root-package-install" : [
             "@php -r \"file_exists('tests/config.php') || copy('tests/config.example.php', 'tests/config.php');\""
