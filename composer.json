@@ -22,11 +22,6 @@
         "psr-4": {
             "Tesseract\\": "src/Tesseract"
         },
-        "autoload-dev": {
-            "psr-4": {
-                "Tesseract\\Crypto\\SDK\\Test": "tests/"
-            }
-        },
         "files": [
             "src/Tesseract/Crypto/SDK/helpers.php"
         ]
