@@ -96,7 +96,7 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
         $uri = (new UriBuilder(URI::TOKENS))
             ->addPathParam(PathParam::LICENSE_ID, $licenseId)
             ->addQueryParam(QueryParam::PAGE, $page)
-            ->addPathParam(QueryParam::SIZE, $size)
+            ->addQueryParam(QueryParam::SIZE, $size)
             ->build();
 
         return $this->get($uri);
