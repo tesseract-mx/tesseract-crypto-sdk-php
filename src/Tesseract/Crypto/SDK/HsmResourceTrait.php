@@ -10,11 +10,13 @@ trait HsmResourceTrait // extends AdminOrganizationTrait implements HsmResource
 {
 
     /**
+     * @param string $accessKey
+     * @param string $secretAccess
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function hsm() : \Psr\Http\Message\ResponseInterface
+    public function hsm(string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface
     {
-        return $this->get(URI::HSM);
+        return $this->get(URI::HSM,$accessKey,$secretAccess);
     }
 
 }
