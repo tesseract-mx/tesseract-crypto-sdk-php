@@ -15,9 +15,9 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
     /**
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function auth(): \Psr\Http\Message\ResponseInterface
+    function auth(string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
-        return $this->get(URI::AUTH);
+        return $this->get(URI::AUTH,$accessKey,$secretAccess);
     }
 
     /**
@@ -25,36 +25,36 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function roles(int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
+    public function roles(int $page = 0, int $size = 20,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::ROLES))
             ->addQueryParam(QueryParam::PAGE, $page)
             ->addQueryParam(QueryParam::SIZE, $size)
             ->build();
 
-        return $this->get($uri);
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
     /**
      * @param int $roleId
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function role(int $roleId): \Psr\Http\Message\ResponseInterface
+    public function role(int $roleId,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::ROLES))
             ->addPathParam(PathParam::ROLE_ID, $roleId)
             ->build();
 
-        return $this->get($uri);
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
 
     /**
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function institution(): \Psr\Http\Message\ResponseInterface
+    function institution(string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
-        return $this->get(URI::INSTITUTION);
+        return $this->get(URI::INSTITUTION,$accessKey,$secretAccess);
     }
 
     /**
@@ -62,26 +62,26 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function licenses(int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
+    public function licenses(int $page = 0, int $size = 20,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::LICENSES))
             ->addQueryParam(QueryParam::PAGE, $page)
             ->addQueryParam(QueryParam::SIZE, $size)
             ->build();
 
-        return $this->get($uri);
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
     /**
      * @param int $licenseId
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function license(int $licenseId): \Psr\Http\Message\ResponseInterface
+    public function license(int $licenseId,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::LICENSE))
             ->addPathParam(PathParam::LICENSE_ID, $licenseId)
             ->build();
-        return $this->get($uri);
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
 
@@ -89,17 +89,46 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param int $licenseId
      * @param int $page
      * @param int $size
+     * @param string $tokenStatus
+     * @param string $tokenType
+     * @param string $accessKey
+     * @param string $secretAccess
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function tokens(int $licenseId, int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
+    public function tokens(int $licenseId, int $page = 0, int $size = 20,string $tokenStatus = null, string $tokenType = null ,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
-        $uri = (new UriBuilder(URI::TOKENS))
-            ->addPathParam(PathParam::LICENSE_ID, $licenseId)
-            ->addQueryParam(QueryParam::PAGE, $page)
-            ->addQueryParam(QueryParam::SIZE, $size)
-            ->build();
+        if(isset($tokenStatus) && isset($tokenType)){
+            $uri = (new UriBuilder(URI::TOKENS))
+                ->addPathParam(PathParam::LICENSE_ID, $licenseId)
+                ->addQueryParam(QueryParam::TOKEN_STATUS,$tokenStatus)
+                ->addQueryParam(QueryParam::TOKEN_TYPE,$tokenType)
+                ->addQueryParam(QueryParam::PAGE, $page)
+                ->addQueryParam(QueryParam::SIZE, $size)
+                ->build();
+        }else if(isset($tokenStatus) && !isset($tokenType)){
+            $uri = (new UriBuilder(URI::TOKENS))
+                ->addPathParam(PathParam::LICENSE_ID, $licenseId)
+                ->addQueryParam(QueryParam::TOKEN_STATUS,$tokenStatus)
+                ->addQueryParam(QueryParam::PAGE, $page)
+                ->addQueryParam(QueryParam::SIZE, $size)
+                ->build();
+        }else if(!isset($tokenStatus) && isset($tokenType)){
+            $uri = (new UriBuilder(URI::TOKENS))
+                ->addPathParam(PathParam::LICENSE_ID, $licenseId)
+                ->addQueryParam(QueryParam::TOKEN_TYPE,$tokenType)
+                ->addQueryParam(QueryParam::PAGE, $page)
+                ->addQueryParam(QueryParam::SIZE, $size)
+                ->build();
+        }else{
+            $uri = (new UriBuilder(URI::TOKENS))
+                ->addPathParam(PathParam::LICENSE_ID, $licenseId)
+                ->addQueryParam(QueryParam::PAGE, $page)
+                ->addQueryParam(QueryParam::SIZE, $size)
+                ->build();
+        }
 
-        return $this->get($uri);
+
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
     /**
@@ -107,13 +136,13 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param array $token
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function createToken(int $licenseId, array $token) : \Psr\Http\Message\ResponseInterface
+    public function createToken(int $licenseId, array $token,string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::TOKENS))
             ->addPathParam(PathParam::LICENSE_ID, $licenseId)
             ->build();
 
-        return $this->post($uri, $token);
+        return $this->post($uri, $token,$accessKey,$secretAccess);
     }
 
 
@@ -122,14 +151,14 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param int $tokenId
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function token(int $licenseId, int $tokenId) : \Psr\Http\Message\ResponseInterface
+    public function token(int $licenseId, int $tokenId,string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::TOKEN))
             ->addPathParam(PathParam::LICENSE_ID, $licenseId)
             ->addPathParam(PathParam::TOKEN_ID, $tokenId)
             ->build();
 
-        return $this->get($uri);
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
     /**
@@ -138,14 +167,14 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param array $token
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function putToken(int $licenseId, int $tokenId, array $token) : \Psr\Http\Message\ResponseInterface
+    public function putToken(int $licenseId, int $tokenId, array $token,string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::TOKEN))
             ->addPathParam(PathParam::LICENSE_ID, $licenseId)
             ->addPathParam(PathParam::TOKEN_ID, $tokenId)
             ->build();
 
-        return $this->put($uri, $token);
+        return $this->put($uri, $token,$accessKey,$secretAccess);
     }
 
     /**
@@ -153,14 +182,14 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param int $tokenId
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function deleteToken(int $licenseId, int $tokenId): \Psr\Http\Message\ResponseInterface
+    public function deleteToken(int $licenseId, int $tokenId,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::TOKEN))
             ->addPathParam(PathParam::LICENSE_ID, $licenseId)
             ->addPathParam(PathParam::TOKEN_ID, $tokenId)
             ->build();
 
-        return $this->delete($uri);
+        return $this->delete($uri,$accessKey,$secretAccess);
     }
 
 
@@ -169,14 +198,14 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param int $tokenId
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function enrollmentString(int $licenseId, int $tokenId) : \Psr\Http\Message\ResponseInterface
+    public function enrollmentString(int $licenseId, int $tokenId,string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::ENROLLMENT_STRING))
             ->addPathParam(PathParam::LICENSE_ID, $licenseId)
             ->addPathParam(PathParam::TOKEN_ID, $tokenId)
             ->build();
 
-        return $this->get($uri);
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
     /**
@@ -184,14 +213,14 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param int $tokenId
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function actCode(int $licenseId, int $tokenId) : \Psr\Http\Message\ResponseInterface
+    public function actCode(int $licenseId, int $tokenId,string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::ACT_CODE))
             ->addPathParam(PathParam::LICENSE_ID, $licenseId)
             ->addPathParam(PathParam::TOKEN_ID, $tokenId)
             ->build();
 
-        return $this->get($uri);
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
     /**
@@ -199,14 +228,14 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param int $tokenId
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function challenge(int $licenseId, int $tokenId) : \Psr\Http\Message\ResponseInterface
+    public function challenge(int $licenseId, int $tokenId,string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::CHALLENGE))
             ->addPathParam(PathParam::LICENSE_ID, $licenseId)
             ->addPathParam(PathParam::TOKEN_ID, $tokenId)
             ->build();
 
-        return $this->get($uri);
+        return $this->get($uri,$accessKey,$secretAccess,$accessKey,$secretAccess);
     }
 
     /**
@@ -215,14 +244,14 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param array $validate
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function validate(int $licenseId, int $tokenId, array $validate) : \Psr\Http\Message\ResponseInterface
+    public function validate(int $licenseId, int $tokenId, array $validate,string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::VALIDATE))
             ->addPathParam(PathParam::LICENSE_ID, $licenseId)
             ->addPathParam(PathParam::TOKEN_ID, $tokenId)
             ->build();
 
-        return $this->post($uri, $validate);
+        return $this->post($uri, $validate,$accessKey,$secretAccess);
     }
 
     /**
@@ -230,36 +259,36 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function apps(int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
+    public function apps(int $page = 0, int $size = 20,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::APPS))
             ->addQueryParam(QueryParam::PAGE, $page)
             ->addQueryParam(QueryParam::SIZE, $size)
             ->build();
 
-        return $this->get($uri);
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
     /**
      * @param int $appId
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function app(int $appId): \Psr\Http\Message\ResponseInterface
+    public function app(int $appId,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::APP))
             ->addPathParam(PathParam::APP_ID, $appId)
             ->build();
 
-        return $this->get($uri);
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
     /**
      * @param array $app
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function createApp(array $app): \Psr\Http\Message\ResponseInterface
+    public function createApp(array $app,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
-        return $this->post(URI::APPS, $app);
+        return $this->post(URI::APPS, $app,$accessKey,$secretAccess);
     }
 
     /**
@@ -267,34 +296,34 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param array $app
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function putApp(int $appId, array $app): \Psr\Http\Message\ResponseInterface
+    public function putApp(int $appId, array $app,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::APP))
             ->addPathParam(PathParam::APP_ID, $appId)
             ->build();
 
-        return $this->put($uri, $app);
+        return $this->put($uri, $app,$accessKey,$secretAccess);
     }
 
     /**
      * @param int $appId
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function deleteApp(int $appId): \Psr\Http\Message\ResponseInterface
+    public function deleteApp(int $appId,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::APP))
             ->addPathParam(PathParam::APP_ID, $appId)
             ->build();
 
-        return $this->delete($uri);
+        return $this->delete($uri,$accessKey,$secretAccess);
     }
 
     /**
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function partition(): \Psr\Http\Message\ResponseInterface
+    public function partition(string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
-        return $this->get(URI::PARTITION);
+        return $this->get(URI::PARTITION,$accessKey,$secretAccess);
     }
 
     /**
@@ -302,23 +331,23 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param int $size
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function keys(int $page = 0, int $size = 20): \Psr\Http\Message\ResponseInterface
+    public function keys(int $page = 0, int $size = 20,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::KEYS))
             ->addQueryParam(QueryParam::PAGE, $page)
             ->addQueryParam(QueryParam::SIZE, $size)
             ->build();
 
-        return $this->get($uri);
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
     /**
      * @param array $hash
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function hash(array $hash): \Psr\Http\Message\ResponseInterface
+    public function hash(array $hash,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
-        return $this->post(URI::HASH, $hash);
+        return $this->post(URI::HASH, $hash,$accessKey,$secretAccess);
     }
 
     /**
@@ -326,11 +355,11 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
      * @param $aes
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function aes(string $alias, $aes) : \Psr\Http\Message\ResponseInterface
+    public function aes(string $alias, string $aes,string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface
     {
         $uri = (new UriBuilder(URI::AES))
             ->addPathParam(PathParam::AES_ALIAS, $alias)
             ->build();
-        return $this->post($uri, $aes);
+        return $this->post($uri, $aes,$accessKey,$secretAccess);
     }
 }

@@ -22,11 +22,11 @@ final class QueryParam
     /**
      *
      */
-    const TOKEN_STATUS = 'token_status';
+    const TOKEN_STATUS = 'tokenStatus';
 
     /**
      *
      */
-    const TOKEN_TYPE = 'token_type';
+    const TOKEN_TYPE = 'tokenType';
 
 }
