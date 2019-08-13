@@ -32,6 +32,7 @@ After installing, you need to require Composer's autoloader:
 ## Configuration
 
 ```php
+<?php
 
 return [
   
@@ -71,7 +72,6 @@ return [
   'tesseract.crypto.timeout' => 5.000
 
 ];
-
 
 ```
 

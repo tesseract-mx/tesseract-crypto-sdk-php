@@ -18,6 +18,8 @@ use Tesseract\Crypto\SDK\Options\Config;
 
 /**
  * Class AbstractHttpClient
+ * @author Cristian Jaramillo (cristian_gerar@hotmail.com)
+ * @author Mijail Vázquez (isaac.sumuano@tesseract.mx)
  * @package Tesseract\Crypto\SDK
  */
 abstract class AbstractHttpClient implements Resource
@@ -52,7 +54,7 @@ abstract class AbstractHttpClient implements Resource
 
         $this->httpClient = new Client([
             ClientOptions::BASE_URI => $this->config->getBaseUrl(),
-            RequestOptions::AUTH => $this->config->getAuth(),
+            //RequestOptions::AUTH => $this->config->getAuth(),
             RequestOptions::DEBUG => $this->config->isDebug(),
             RequestOptions::HEADERS => $this->headers(),
             RequestOptions::TIMEOUT => $this->config->getTimeout()
@@ -82,13 +84,17 @@ abstract class AbstractHttpClient implements Resource
      * @param array $body
      * @return array
      */
-    protected function addBodyOptions(array $body = array())
+    protected function addBodyOptions(array $body = array(),string $accessKey, string $secretAccess)
     {
         $options = array();
 
         if(empty($body) === FALSE)
             $options = [
-                RequestOptions::JSON => $body
+                RequestOptions::JSON => $body,
+                RequestOptions::AUTH => [
+                    $accessKey,
+                    $secretAccess
+                ]
             ];
 
         array_push($options, $this->options());
@@ -98,41 +104,56 @@ abstract class AbstractHttpClient implements Resource
 
     /**
      * @param string $endpoint
+     * @param string $accessKey
+     * @param string $secretAccess
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function get(string $endpoint): \Psr\Http\Message\ResponseInterface
+    function get(string $endpoint,string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
-        return $this->httpClient->get($endpoint, $this->options());
+        $authArray = [
+            RequestOptions::AUTH => [
+                $accessKey,
+                $secretAccess
+            ]
+        ];
+
+        return $this->httpClient->get($endpoint, $authArray);
     }
 
     /**
      * @param string $endpoint
      * @param array $body
+     * @param string $accessKey
+     * @param string $secretAccess
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function post(string $endpoint, array $body = array()): \Psr\Http\Message\ResponseInterface
+    function post(string $endpoint, array $body = array(),string $accessKey,string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
-        return $this->httpClient->post($endpoint, $this->addBodyOptions($body));
+        return $this->httpClient->post($endpoint, $this->addBodyOptions($body,$accessKey,$secretAccess));
     }
 
     /**
      * @param string $endpoint
      * @param array $body
+     * @param  $accessKey
+     * @param $secretAccess
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function put(string $endpoint, array $body = array()) : \Psr\Http\Message\ResponseInterface
+    function put(string $endpoint, array $body = array(),string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface
     {
-        return $this->httpClient->put($endpoint, $this->addBodyOptions($body));
+        return $this->httpClient->put($endpoint, $this->addBodyOptions($body,$accessKey,$secretAccess));
     }
 
     /**
      * @param string $endpoint
      * @param array $body
+     * @param string $accessKey
+     * @param string $secretAccess
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function delete(string $endpoint, array $body = array()): \Psr\Http\Message\ResponseInterface
+    function delete(string $endpoint, array $body = array(),string $accessKey, string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
-        return $this->httpClient->delete($endpoint, $this->addBodyOptions($body));
+        return $this->httpClient->delete($endpoint, $this->addBodyOptions($body,$accessKey,$secretAccess));
     }
 
 }
