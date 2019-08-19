@@ -93,5 +93,5 @@ interface AdminOrganizationResource extends OrganizationResource
      * @param string $secretAccess
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function adminDeleteLicense(int $institutionId, string $accessKey, string $secretAccess) : \Psr\Http\Message\ResponseInterface;
+    public function adminDeleteLicense(int $institutionId, int $licenseId, string $accessKey, string $secretAccess) : \Psr\Http\Message\ResponseInterface;
 }

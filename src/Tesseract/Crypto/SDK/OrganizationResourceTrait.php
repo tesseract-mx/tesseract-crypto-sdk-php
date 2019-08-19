@@ -235,7 +235,7 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
             ->addPathParam(PathParam::TOKEN_ID, $tokenId)
             ->build();
 
-        return $this->get($uri,$accessKey,$secretAccess,$accessKey,$secretAccess);
+        return $this->get($uri,$accessKey,$secretAccess);
     }
 
     /**
