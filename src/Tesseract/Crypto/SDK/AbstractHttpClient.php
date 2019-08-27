@@ -55,6 +55,7 @@ abstract class AbstractHttpClient implements Resource
         $this->httpClient = new Client([
             ClientOptions::BASE_URI => $this->config->getBaseUrl(),
             //RequestOptions::AUTH => $this->config->getAuth(),
+            RequestOptions::HTTP_ERRORS => false,
             RequestOptions::DEBUG => $this->config->isDebug(),
             RequestOptions::HEADERS => $this->headers(),
             RequestOptions::TIMEOUT => $this->config->getTimeout()
@@ -151,9 +152,17 @@ abstract class AbstractHttpClient implements Resource
      * @param string $secretAccess
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function delete(string $endpoint, array $body = array(),string $accessKey, string $secretAccess): \Psr\Http\Message\ResponseInterface
+    function delete(string $endpoint,array $body = array(),string $accessKey, string $secretAccess): \Psr\Http\Message\ResponseInterface
     {
-        return $this->httpClient->delete($endpoint, $this->addBodyOptions($body,$accessKey,$secretAccess));
+        $options = array();
+        $options = [
+            RequestOptions::AUTH => [
+                $accessKey,
+                $secretAccess
+            ]
+        ];
+
+        return $this->httpClient->delete($endpoint, $options);
     }
 
 }

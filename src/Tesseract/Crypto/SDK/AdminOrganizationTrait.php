@@ -80,7 +80,7 @@ trait AdminOrganizationTrait //extends OrganizationResourceTrait implements Admi
             ->addPathParam(PathParam::INSTITUTION_ID, $institutionId)
             ->build();
 
-        return $this->delete($uri,$accessKey,$secretAccess);
+        return $this->delete($uri,array(),$accessKey,$secretAccess);
     }
 
     /**
@@ -163,6 +163,6 @@ trait AdminOrganizationTrait //extends OrganizationResourceTrait implements Admi
             ->addPathParam(PathParam::INSTITUTION_ID, $institutionId)
             ->addPathParam(PathParam::LICENSE_ID, $licenseId)
             ->build();
-        return $this->delete($uri,$accessKey,$secretAccess);
+        return $this->delete($uri,array(),$accessKey,$secretAccess);
     }
 }
