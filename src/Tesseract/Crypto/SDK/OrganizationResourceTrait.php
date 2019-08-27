@@ -189,7 +189,7 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
             ->addPathParam(PathParam::TOKEN_ID, $tokenId)
             ->build();
 
-        return $this->delete($uri,$accessKey,$secretAccess);
+        return $this->delete($uri,array(),$accessKey,$secretAccess);
     }
 
 
@@ -315,7 +315,7 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
             ->addPathParam(PathParam::APP_ID, $appId)
             ->build();
 
-        return $this->delete($uri,$accessKey,$secretAccess);
+        return $this->delete($uri,array(),$accessKey,$secretAccess);
     }
 
     /**

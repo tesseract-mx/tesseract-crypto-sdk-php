@@ -43,6 +43,6 @@ interface Resource
      * @param string $secretAccess
      * @return \Psr\Http\Message\ResponseInterface
      */
-    function delete(string $endpoint, array $body = array(),string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface;
+    function delete(string $endpoint,array $body = array(),string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface;
 
 }
