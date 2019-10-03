@@ -58,7 +58,8 @@ abstract class AbstractHttpClient implements Resource
             RequestOptions::HTTP_ERRORS => false,
             RequestOptions::DEBUG => $this->config->isDebug(),
             RequestOptions::HEADERS => $this->headers(),
-            RequestOptions::TIMEOUT => $this->config->getTimeout()
+            RequestOptions::TIMEOUT => $this->config->getTimeout(),
+            RequestOptions::VERIFY => false
         ]);
     }
 
