@@ -38,4 +38,14 @@ final class PathParam
      *
      */
     const AES_ALIAS = '{aes_alias}';
+
+    /**
+     * 
+     */
+    const ACCESS_KEY_ID = '{access_key_id}';
+
+    /**
+     * 
+     */
+    const NEW_SECRET_ACCESS_KEY = '{new_secret_access_key}';
 }

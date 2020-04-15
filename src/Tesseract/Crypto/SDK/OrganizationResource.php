@@ -168,4 +168,11 @@ interface OrganizationResource extends Resource
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function aes(string $alias, string $aes,string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface;
+
+    /**
+     * @param string $key_id
+     * @param string $access_key
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function putPassword(array $password, string $accessKey, string $secretAccess ) : \Psr\Http\Message\ResponseInterface; 
 }
