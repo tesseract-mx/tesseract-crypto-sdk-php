@@ -174,5 +174,5 @@ interface OrganizationResource extends Resource
      * @param string $access_key
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function putPassword(array $password, string $accessKey, string $secretAccess ) : \Psr\Http\Message\ResponseInterface; 
+    public function putPassword(array $password) : \Psr\Http\Message\ResponseInterface; 
 }

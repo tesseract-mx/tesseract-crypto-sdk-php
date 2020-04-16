@@ -105,6 +105,21 @@ abstract class AbstractHttpClient implements Resource
     }
 
     /**
+     * @param array $body
+     * @return array
+     */
+    protected function addBodyOptionsNoAuth(array $body = array()){
+        $options = array();
+        if(empty($body) === FALSE)
+            $options = [
+                RequestOptions::JSON => $body
+            ];
+        array_push($options, $this->options());
+        return $options;    
+    }
+
+
+    /**
      * @param string $endpoint
      * @param string $accessKey
      * @param string $secretAccess
@@ -144,6 +159,11 @@ abstract class AbstractHttpClient implements Resource
     function put(string $endpoint, array $body = array(),string $accessKey,string $secretAccess) : \Psr\Http\Message\ResponseInterface
     {
         return $this->httpClient->put($endpoint, $this->addBodyOptions($body,$accessKey,$secretAccess));
+    }
+
+    function putNoAuth(string $endpoint, array $body = array()) : \Psr\Http\Message\ResponseInterface
+    {
+        return $this->httpClient->put($endpoint, $this->addBodyOptionsNoAuth($body));
     }
 
     /**

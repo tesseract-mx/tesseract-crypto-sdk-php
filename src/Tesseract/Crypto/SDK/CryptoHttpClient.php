@@ -483,7 +483,7 @@ abstract class CryptoHttpClient extends AbstractHttpClient
      {
          $uri = (new UriBuilder(URI::SECRET_ACCESS_KEY))
             ->build();
-        return $this->put($key_id, $password);
+        return $this->putNoAuth($uri, $password);
      }
 
 }
