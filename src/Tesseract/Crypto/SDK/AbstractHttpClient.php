@@ -160,7 +160,12 @@ abstract class AbstractHttpClient implements Resource
     {
         return $this->httpClient->put($endpoint, $this->addBodyOptions($body,$accessKey,$secretAccess));
     }
-
+    
+    /**
+     * @param string $endpoint
+     * @param array $body
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     function putNoAuth(string $endpoint, array $body = array()) : \Psr\Http\Message\ResponseInterface
     {
         return $this->httpClient->put($endpoint, $this->addBodyOptionsNoAuth($body));

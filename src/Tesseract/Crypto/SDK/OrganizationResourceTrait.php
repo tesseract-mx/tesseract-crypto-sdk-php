@@ -364,8 +364,7 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
     }
 
     /**
-     * @param string $key_id
-     * @param string $access_key
+     * 
      * @return \Psr\Http\Message\ResponseInterface
      */
 
