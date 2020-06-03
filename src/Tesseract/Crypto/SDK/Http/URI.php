@@ -59,6 +59,9 @@ final class URI
 
     const HSM = self::API . 'hsm';
 
+    const SECRET_ACCESS_KEY = URI::APPS . '/secretAccessKey';
+
+
     /**
      * @var string
      */

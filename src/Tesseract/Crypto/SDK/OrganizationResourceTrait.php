@@ -362,4 +362,16 @@ trait OrganizationResourceTrait // extends AbstractHttpClient implements Organiz
             ->build();
         return $this->post($uri, $aes,$accessKey,$secretAccess);
     }
+
+    /**
+     * 
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+
+     public function putPassword(array $password) : \Psr\Http\Message\ResponseInterface
+     {
+         $uri = (new UriBuilder(URI::SECRET_ACCESS_KEY))
+         ->build();
+         return $this->putNoAuth($uri, $password);
+     }
 }
