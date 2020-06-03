@@ -2,7 +2,7 @@
     "name": "tesseract/crypto-sdk",
     "description": "Tesseract Crypto SDK PHP from Tesseract Crypto API v2",
     "keywords": ["tesseract", "cryptography", "sdk", "security", "aes", "rsa", "sha"],
-    "version": "dev-feature/add-url",
+    "version": "0.3.0",
     "license": "MIT",
     "authors": [
         {
