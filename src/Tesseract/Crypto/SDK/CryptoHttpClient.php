@@ -473,4 +473,17 @@ abstract class CryptoHttpClient extends AbstractHttpClient
         return $this->delete($uri);
     }
 
+    /**
+     * @param string $key_id
+     * @param string $access_key
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+
+     public function putPassword(array $password): \Psr\Http\Message\ResponseInterface
+     {
+         $uri = (new UriBuilder(URI::SECRET_ACCESS_KEY))
+            ->build();
+        return $this->putNoAuth($uri, $password);
+     }
+
 }
