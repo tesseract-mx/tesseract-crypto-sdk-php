@@ -38,7 +38,7 @@ return [
         /**
          *
          */
-        'tesseract.crypto.baseUrl' => 'https://sandbox.tesseract.mx',
+        'tesseract.crypto.baseUrl' => 'https://sandbox2.tesseract.mx',
 
         /**
          *

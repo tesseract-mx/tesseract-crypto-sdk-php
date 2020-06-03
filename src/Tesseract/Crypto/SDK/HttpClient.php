@@ -238,4 +238,11 @@ interface HttpClient extends Resource
      */
     public function adminDeleteLicense(int $institutionId, int $licenseId) : \Psr\Http\Message\ResponseInterface;
 
+    /**
+     * @param string $key_id
+     * @param string $access_key
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function putPassword(array $password) : \Psr\Http\Message\ResponseInterface;
+
 }
